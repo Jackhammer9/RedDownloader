@@ -78,11 +78,9 @@ class Download:
                     pass
                 self.CleanUp()
                 print(self.output + " Successfully Downloaded!")
-                del clip.reader
-                del clip
+                clip.close()
             except Exception as e:
-                del clip.reader
-                del clip
+                clip.close()
                 print('Video has no sound')
                 self.CleanUp(True)
                 print(self.output + " Successfully Downloaded!")
@@ -110,3 +108,6 @@ class Download:
             return self.mediaType
         else:
             return None
+
+Download('https://www.reddit.com/r/animation/comments/q6es3s/strong_coffee_animation/' , destination="tests/")
+os.remove("tests/downloaded.mp4")
