@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="RedDownloader",
-    version="2.1.7",
+    version="2.1.8",
     author="Arnav Bajaj",
     author_email="arnavbajaj9@gmail.com",
     description="A package to download Reddit hosted videos with sound without manual installation of ffmpeg and other media as well with the post's url",

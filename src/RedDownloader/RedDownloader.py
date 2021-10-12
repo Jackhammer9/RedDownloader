@@ -108,6 +108,3 @@ class Download:
             return self.mediaType
         else:
             return None
-
-Download('https://www.reddit.com/r/animation/comments/q6es3s/strong_coffee_animation/' , destination="tests/")
-os.remove("tests/downloaded.mp4")
