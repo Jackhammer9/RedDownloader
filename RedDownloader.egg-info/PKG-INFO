@@ -1,0 +1,49 @@
+Metadata-Version: 2.1
+Name: RedDownloader
+Version: 0.1.1
+Summary: A small example package to install reddit videos with sound without ffmpeg
+Home-page: https://github.com/JackhammerYT/RedVidDownloader
+Author: Arnav Bajaj
+Author-email: arnavbajaj9@gmail.com
+License: UNKNOWN
+Project-URL: Bug Tracker, https://github.com/JackhammerYT/RedVidDownloader/issues
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+A very easy to use library to download videos from reddit with sound without installing external installation of ffmpeg. The library can also be used to download pictures all just with a reddit post link
+note that this package does only download media from posts with images/video directly uploaded to reddit and not from sources like imgur or youtube / vimeo.
+
+Usage:
+
+```python
+d = Downloader("clientID", "clientSecret", "userAgent")
+```
+
+this will initialize your praw bot make sure you have a registered praw application registered
+
+```python
+d.download(url)
+```
+This will automatically download media from the passed url it would automatically detect if it's a picture/video with default options. to pass in an output filename just pass in the output parameter as:
+
+```python
+d.download(url , output="MyAwesomeRedditMedia")
+```
+
+you don't have to pass in extensions to the output parameter
+
+Another argument is the ```quality``` argument which defines the resolution to download if the filetype is a video the avaliable options to choose from are 360 , 720 , 1080 please note that higher resolution would result in bigger file size. An example:
+
+```python
+d.download(url , , output="MyAwesomeRedditMedia" , quality = 1080)
+```
+
+The package has been tested for videos with no sound and it works really well!
+
+Arnav Bajaj
+

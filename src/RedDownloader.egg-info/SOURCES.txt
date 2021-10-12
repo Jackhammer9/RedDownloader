@@ -1,0 +1,11 @@
+LICENSE
+README.md
+pyproject.toml
+setup.py
+src/RedDownloader/RedDownloader.py
+src/RedDownloader/__init__.py
+src/RedDownloader.egg-info/PKG-INFO
+src/RedDownloader.egg-info/SOURCES.txt
+src/RedDownloader.egg-info/dependency_links.txt
+src/RedDownloader.egg-info/requires.txt
+src/RedDownloader.egg-info/top_level.txt

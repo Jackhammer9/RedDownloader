@@ -1,0 +1,6 @@
+requests
+praw
+urllib
+tqdm
+moviepy
+pillow
