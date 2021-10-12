@@ -29,8 +29,31 @@ class Download:
                 print("Sucessfully Downloaded Image " + f"{self.output}")
                 if self.destination != None:
                     shutil.move(f"{self.output}.jpeg" , self.destination)
+            elif '/gallery/' in self.postLink:
+                print("Detected Post Type: Gallery")
+                self.mediaType= 'g'
+                self.directory = os.path.join(self.destination , self.output)
+                try:
+                    os.mkdir(self.directory)
+                except:
+                    pass
+                print("Fetching images from gallery")
+                self.GalleryPosts = requests.get("https://jackhammer.pythonanywhere.com/reddit/media/gallery", params={'url':self.postLink})
+                posts = json.loads(self.GalleryPosts.content)
+                self.GetGallery(posts)
             else:
                 print("Error: Could Not Recoganize Post Type")
+
+    def GetGallery(self , posts):
+        TotalPosts = len(posts)
+        print("Total images to be downloaded: " , TotalPosts)
+        for i in range(TotalPosts):
+            print(f"Downloading image {i+1} / {TotalPosts}")
+            ImageData = requests.get(posts[i]).content
+            with open(os.path.join(self.directory , self.output+f'{i+1}.jpeg') , 'wb') as image:
+                image.write(ImageData)
+                image.close()
+        print("Image Gallery Successfully Downloaded!")
 
     def InitiateVideo(self , quality , url):
         try:

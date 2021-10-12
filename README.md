@@ -1,4 +1,4 @@
-A very easy to use library to download videos from reddit with sound without installing external installation of ffmpeg. The library can also be used to download pictures all just with a reddit post link
+A very easy to use library to download videos from reddit with sound without installing external installation of ffmpeg. The library can also be used to download pictures and even picture galleries all just with a reddit post link
 note that this package does only download media from posts with images/video directly uploaded to reddit and not from sources like imgur or youtube / vimeo.
 
 Usage:
@@ -22,11 +22,13 @@ After importing, Downloading is just a single line of code
 RedDownloader.Download(url)
 ```
 
-This will automatically download media from the passed url it would automatically detect if it's a picture/video with default options. to pass in an output filename just pass in the output parameter as:
+This will automatically download media from the passed url it would automatically detect if it's a picture/video/gallery with default options. to pass in an output filename just pass in the output parameter as:
 
 ```python
 RedDownloader.Download(url , output="MyAwesomeRedditMedia")
 ```
+
+In case if a post is of type gallery it will make a folder in the ```destination``` path with the output parameter passed. That folder would contain all your pictures. In Case if a folder with that name already exists files would be downloaded in that folder.
 
 To set a custom path for downloaded file use ```destination``` as an argument like
 
@@ -51,6 +53,8 @@ file = RedDownloader.Download(url)
 print(file.GetMediaType())
 ```
 
-for images it returns a ```i``` while for videos it returns a ```v```
+for images it returns a ```i```  for videos it returns a ```v``` and for a gallery post it returns a ```g```
 
-The package has been tested for videos with no sound as well. It doesn't support gallery posts yet
+The package has been tested for videos with no sound as well.
+
+Galleries were first supported in RedDownloader 2.2.0 any older version used to download a gallery post would return a ```Post Not Recoganized``` error
