@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: RedDownloader
-Version: 2.2.0
+Version: 2.2.3
 Summary: A package to download Reddit hosted videos with sound without manual installation of ffmpeg and other media as well with the post's url
 Home-page: https://github.com/JackhammerYT/RedVidDownloader
 Author: Arnav Bajaj

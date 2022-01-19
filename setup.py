@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="RedDownloader",
-    version="2.2.0",
+    version="2.2.3",
     author="Arnav Bajaj",
     author_email="arnavbajaj9@gmail.com",
     description="A package to download Reddit hosted videos with sound without manual installation of ffmpeg and other media as well with the post's url",
@@ -22,6 +22,6 @@ setuptools.setup(
     ],
     package_dir={"": "src"},
     packages=setuptools.find_packages(where="src"),
-    install_requires=['requests' , 'praw' , 'tqdm==4.62.3' , 'moviepy', 'pillow'],
+    install_requires=['requests' , 'tqdm==4.62.3' , 'moviepy', 'pillow'],
     python_requires=">=3.6",
 )
