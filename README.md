@@ -1,4 +1,4 @@
-A very easy to use library to download videos from reddit with sound without installing external installation of ffmpeg. The library can also be used to download pictures and even picture galleries all just with a reddit post link
+A very easy to use library to download videos from reddit with sound without installing external installation of ffmpeg. The library can also be used to download pictures and even picture galleries all just with a reddit post link. With RedDownloader 3 you can access Reddit API methods without having your own bot with classes such as ```DownloadBySubreddit``` more on that below.
 note that this package does only download media from posts with images/video directly uploaded to reddit and not from sources like imgur or youtube / vimeo.
 
 Usage:
@@ -58,3 +58,45 @@ for images it returns a ```i```  for videos it returns a ```v``` and for a galle
 The package has been tested for videos with no sound as well.
 
 Galleries were first supported in RedDownloader 2.2.0 any older version used to download a gallery post would return a ```Post Not Recoganized``` error
+
+<h1>Using Reddit API Methods</h1>
+
+To download some number of media from a specific subreddit you can use the ```DownloadBySubreddit```:
+
+```python
+RedDownloader.DownloadBySubreddit(subreddit , NumberOfPosts , flair = None , SortBy = "hot" , quality = 720 , output = "downloaded" , destination=None)
+```
+
+subreddit: the subreddit you want to download the posts from.
+NumberOfPosts: the number of posts to download from the subreddit
+flair: to download posts from a specfic flair from the subreddit of your choice by defaut flair is set to ```None``` and downloads posts from any flair
+SortBy: it sorts the posts from the subreddit you can set it to either ```hot```, ```new``` or ```top``` by default it is set to ```hot```
+output: it is the folder name under which all the posts get downloaded
+destination: path where the download folder and all the posts are downloaded by default it downloads the posts in current working directory.
+
+essentialy you can just do:
+```python
+RedDownloader.DownloadBySubreddit("memes" , 15)
+```
+
+this would download the hottest 15 posts from r/memes in a folder called downloaded in your current working directory
+
+alternativley you have:
+
+```python
+RedDownloader.DownloadImagesBySubreddit("python" , 5)
+```
+
+This would only download Images from a subreddit it is derived from ```DownloadBySubreddit``` hence shares the same argumets as listed above
+
+```python
+RedDownloader.DownloadVideosBySubreddit("python" , 5)
+```
+
+This would only download Videos from a subreddit it is derived from ```DownloadBySubreddit``` hence shares the same argumets as listed above
+
+```python
+RedDownloader.DownloadGalleriesBySubreddit("python" , 5)
+```
+
+This would only download Gallery type posts from a subreddit it is derived from ```DownloadBySubreddit``` hence shares the same argumets as listed above

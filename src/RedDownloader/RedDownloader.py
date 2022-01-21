@@ -157,3 +157,172 @@ class Download:
             return self.mediaType
         else:
             return None
+
+class DownloadBySubreddit:
+
+    def __init__(self , Subreddit , NumberOfPosts , flair = None , SortBy = "hot" , quality = 720 , output = "downloaded" , destination=None):
+        if SortBy == "hot" or SortBy =="new" or SortBy=="top":
+            print("Fetching Posts...")
+            try:
+                self.PostLinks = requests.get("https://jackhammer.pythonanywhere.com//reddit/subreddit/all", params={'subreddit':Subreddit , 'number':NumberOfPosts , 'flair':flair , 'sort':SortBy})
+                Links = json.loads(self.PostLinks.content)
+                self.DownloadLinks(Links , quality , output ,destination)
+            except Exception as e:
+                print("Unable to fetch posts")
+                print(e)
+        else:
+            print("Bad SortBy Option Please either choose 'top' or 'new' or 'hot' ")
+
+    def DownloadLinks(self , links , quality , output , destination):
+        print("Downloading Posts...")
+        print("Creating " , output , " directory...")
+        path = ''
+        try:
+            if destination != None:
+                path = os.path.join(destination , output)
+                os.mkdir(path)
+            else:
+                os.mkdir(output)
+        except:
+            pass
+        length = len(links)
+        i=1
+        try:
+            for link in links:
+                print(f"Downloading Post {i} of {length}")
+                if destination != None:
+                    Download(link , quality , output+str(i) , destination+f'/{output}/')
+                else:
+                    Download(link , quality , output+str(i) , f'{output}/')
+                i += 1
+            print("All Posts Downloaded Sucessfully...")
+        except Exception as e:
+            print("There was an unexpected error while downloading posts...")
+            print(e)
+
+class DownloadImagesBySubreddit:
+
+    def __init__(self , Subreddit , NumberOfPosts , flair = None , SortBy = "hot" , quality = 720 , output = "downloaded" , destination=None):
+        if SortBy == "hot" or SortBy =="new" or SortBy=="top":
+            print("Fetching Posts...")
+            try:
+                self.PostLinks = requests.get("https://jackhammer.pythonanywhere.com//reddit/subreddit/images", params={'subreddit':Subreddit , 'number':NumberOfPosts , 'flair':flair , 'sort':SortBy})
+                Links = json.loads(self.PostLinks.content)
+                self.DownloadLinks(Links , quality , output ,destination)
+            except Exception as e:
+                print("Unable to fetch posts")
+                print(e)
+        else:
+            print("Bad SortBy Option Please either choose 'top' or 'new' or 'hot' ")
+
+    def DownloadLinks(self , links , quality , output , destination):
+        print("Downloading Posts...")
+        print("Creating " , output , " directory...")
+        path = ''
+        try:
+            if destination != None:
+                path = os.path.join(destination , output)
+                os.mkdir(path)
+            else:
+                os.mkdir(output)
+        except:
+            pass
+        length = len(links)
+        i=1
+        try:
+            for link in links:
+                print(f"Downloading Post {i} of {length}")
+                if destination != None:
+                    Download(link , quality , output+str(i) , destination+f'/{output}/')
+                else:
+                    Download(link , quality , output+str(i) , f'{output}/')
+                i += 1
+            print("All Posts Downloaded Sucessfully...")
+        except Exception as e:
+            print("There was an unexpected error while downloading posts...")
+            print(e)
+
+
+class DownloadVideosBySubreddit:
+
+    def __init__(self , Subreddit , NumberOfPosts , flair = None , SortBy = "hot" , quality = 720 , output = "downloaded" , destination=None):
+        if SortBy == "hot" or SortBy =="new" or SortBy=="top":
+            print("Fetching Posts...")
+            try:
+                self.PostLinks = requests.get("https://jackhammer.pythonanywhere.com//reddit/subreddit/videos", params={'subreddit':Subreddit , 'number':NumberOfPosts , 'flair':flair , 'sort':SortBy})
+                Links = json.loads(self.PostLinks.content)
+                self.DownloadLinks(Links , quality , output ,destination)
+            except Exception as e:
+                print("Unable to fetch posts")
+                print(e)
+        else:
+            print("Bad SortBy Option Please either choose 'top' or 'new' or 'hot' ")
+
+    def DownloadLinks(self , links , quality , output , destination):
+        print("Downloading Posts...")
+        print("Creating " , output , " directory...")
+        path = ''
+        try:
+            if destination != None:
+                path = os.path.join(destination , output)
+                os.mkdir(path)
+            else:
+                os.mkdir(output)
+        except:
+            pass
+        length = len(links)
+        i=1
+        try:
+            for link in links:
+                print(f"Downloading Post {i} of {length}")
+                if destination != None:
+                    Download(link , quality , output+str(i) , destination+f'/{output}/')
+                else:
+                    Download(link , quality , output+str(i) , f'{output}/')
+                i += 1
+            print("All Posts Downloaded Sucessfully...")
+        except Exception as e:
+            print("There was an unexpected error while downloading posts...")
+            print(e)
+
+class DownloadGalleriesBySubreddit:
+
+    def __init__(self , Subreddit , NumberOfPosts , flair = None , SortBy = "hot" , quality = 720 , output = "downloaded" , destination=None):
+        if SortBy == "hot" or SortBy =="new" or SortBy=="top":
+            print("Fetching Posts...")
+            try:
+                self.PostLinks = requests.get("https://jackhammer.pythonanywhere.com//reddit/subreddit/galleries", params={'subreddit':Subreddit , 'number':NumberOfPosts , 'flair':flair , 'sort':SortBy})
+                Links = json.loads(self.PostLinks.content)
+                self.DownloadLinks(Links , quality , output ,destination)
+            except Exception as e:
+                print("Unable to fetch posts")
+                print(e)
+        else:
+            print("Bad SortBy Option Please either choose 'top' or 'new' or 'hot' ")
+
+    def DownloadLinks(self , links , quality , output , destination):
+        print("Downloading Posts...")
+        print("Creating " , output , " directory...")
+        path = ''
+        try:
+            if destination != None:
+                path = os.path.join(destination , output)
+                os.mkdir(path)
+            else:
+                os.mkdir(output)
+        except:
+            pass
+        length = len(links)
+        i=1
+        try:
+            for link in links:
+                print(f"Downloading Post {i} of {length}")
+                if destination != None:
+                    Download(link , quality , output+str(i) , destination+f'/{output}/')
+                else:
+                    Download(link , quality , output+str(i) , f'{output}/')
+                i += 1
+            print("All Posts Downloaded Sucessfully...")
+        except Exception as e:
+            print("There was an unexpected error while downloading posts...")
+            print(e)
