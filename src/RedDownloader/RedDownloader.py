@@ -166,6 +166,7 @@ class DownloadBySubreddit:
             try:
                 self.PostLinks = requests.get("https://jackhammer.pythonanywhere.com//reddit/subreddit/all", params={'subreddit':Subreddit , 'number':NumberOfPosts , 'flair':flair , 'sort':SortBy})
                 Links = json.loads(self.PostLinks.content)
+                self.ProcessedLinks = Links
                 self.DownloadLinks(Links , quality , output ,destination)
             except Exception as e:
                 print("Unable to fetch posts")
@@ -199,6 +200,12 @@ class DownloadBySubreddit:
         except Exception as e:
             print("There was an unexpected error while downloading posts...")
             print(e)
+
+    def GetPostAuthors(self):
+        Authors = []
+        for author in self.ProcessedLinks:
+            Authors.append(GetPostAuthor(author).Get())
+        return Authors
 
 class DownloadImagesBySubreddit:
 
@@ -208,6 +215,7 @@ class DownloadImagesBySubreddit:
             try:
                 self.PostLinks = requests.get("https://jackhammer.pythonanywhere.com//reddit/subreddit/images", params={'subreddit':Subreddit , 'number':NumberOfPosts , 'flair':flair , 'sort':SortBy})
                 Links = json.loads(self.PostLinks.content)
+                self.ProcessedLinks = Links
                 self.DownloadLinks(Links , quality , output ,destination)
             except Exception as e:
                 print("Unable to fetch posts")
@@ -241,6 +249,12 @@ class DownloadImagesBySubreddit:
         except Exception as e:
             print("There was an unexpected error while downloading posts...")
             print(e)
+
+    def GetPostAuthors(self):
+        Authors = []
+        for author in self.ProcessedLinks:
+            Authors.append(GetPostAuthor(author).Get())
+        return Authors
 
 
 class DownloadVideosBySubreddit:
@@ -251,6 +265,7 @@ class DownloadVideosBySubreddit:
             try:
                 self.PostLinks = requests.get("https://jackhammer.pythonanywhere.com//reddit/subreddit/videos", params={'subreddit':Subreddit , 'number':NumberOfPosts , 'flair':flair , 'sort':SortBy})
                 Links = json.loads(self.PostLinks.content)
+                self.ProcessedLinks = Links
                 self.DownloadLinks(Links , quality , output ,destination)
             except Exception as e:
                 print("Unable to fetch posts")
@@ -284,6 +299,12 @@ class DownloadVideosBySubreddit:
         except Exception as e:
             print("There was an unexpected error while downloading posts...")
             print(e)
+
+    def GetPostAuthors(self):
+        Authors = []
+        for author in self.ProcessedLinks:
+            Authors.append(GetPostAuthor(author).Get())
+        return Authors
 
 class DownloadGalleriesBySubreddit:
 
@@ -293,6 +314,7 @@ class DownloadGalleriesBySubreddit:
             try:
                 self.PostLinks = requests.get("https://jackhammer.pythonanywhere.com//reddit/subreddit/galleries", params={'subreddit':Subreddit , 'number':NumberOfPosts , 'flair':flair , 'sort':SortBy})
                 Links = json.loads(self.PostLinks.content)
+                self.ProcessedLinks = Links
                 self.DownloadLinks(Links , quality , output ,destination)
             except Exception as e:
                 print("Unable to fetch posts")
@@ -326,3 +348,20 @@ class DownloadGalleriesBySubreddit:
         except Exception as e:
             print("There was an unexpected error while downloading posts...")
             print(e)
+
+    def GetPostAuthors(self):
+        Authors = []
+        for author in self.ProcessedLinks:
+            Authors.append(GetPostAuthor(author).Get())
+        return Authors
+
+class GetPostAuthor:
+    def __init__(self , url):
+        try:
+            self.PostAuthor = requests.get("https://jackhammer.pythonanywhere.com/reddit/media/author", params={'url':url}).text
+        except Exception as e:
+            print("Unable to fetch post author")
+            print(e)
+
+    def Get(self):
+        return self.PostAuthor

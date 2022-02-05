@@ -100,3 +100,20 @@ RedDownloader.DownloadGalleriesBySubreddit("python" , 5)
 ```
 
 This would only download Gallery type posts from a subreddit it is derived from ```DownloadBySubreddit``` hence shares the same argumets as listed above
+
+<h1>New Features in RedDownloader 3.1.1:</h1>
+
+You can now use the ```GetPostAuthor``` class to get a post author/poster from a given url the syntax followed is
+
+```python
+author = RedDownloader.GetPostAuthor(url).Get()
+print(author)
+```
+
+Classes such as ```DownloadBySubreddit``` , ```DownloadImagesBySubreddit``` , ```DownloadVideosBySubreddit``` and ```DownloadGalleriesBySubreddit``` now have a method ```GetPostAuthors``` which returns a list of authors of the posts you just downloaded. Example:
+
+```python
+posts = RedDownloader.DownloadBySubreddit("python" , 5)
+authors = posts.GetPostAuthors()
+print(authors)
+```
