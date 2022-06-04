@@ -2,25 +2,6 @@
 This is the main source file for RedDownloader Version 3.1.1 with it's primary
 usage being downloading Reddit Posts i.e Image Posts , Videos , Gifs , Gallery
 Posts.
-
-A collection of class names:
-
-                    *Download
-                    *DownloadBySubreddit
-                    *DownloadVideosBySubreddit
-                    *DownloadImagesBySubreddit
-                    *DownloadGalleryBySubreddit
-                    *GetPostAuthor
-
-A collection of endpoints being used:
-
-                    *https://jackhammer.pythonanywhere.com/reddit/media/downloader
-                    *https://jackhammer.pythonanywhere.com/reddit/media/gallery
-                    *https://jackhammer.pythonanywhere.com//reddit/subreddit/all
-                    *https://jackhammer.pythonanywhere.com/reddit/subreddit/gallery
-                    *https://jackhammer.pythonanywhere.com/reddit/subreddit/images
-                    *https://jackhammer.pythonanywhere.com/reddit/subreddit/videos
-                    *https://jackhammer.pythonanywhere.com/reddit/media/author
 '''
 
 # Internal Imports
@@ -69,15 +50,15 @@ class Download:
     def __init__(
             self,
             url,
-            quality=720,
+            quality=1080,
             output="downloaded",
             destination=None):
         self.output = output
         self.destination = destination
-        qualityTypes = [360, 720, 1080]
+        qualityTypes = [144, 240, 360, 480, 720, 1080]
         if quality not in qualityTypes:  # if quality is not in the list
-            print("Error: Unkown Quality Type" +  # Throw an error
-                  f" {quality} choose either 360 , 720 , 1080")
+            raise Exception("Error: Unkown Quality Type" +  # Throw an error
+                            f" {quality} choose either 144, 240, 360, 480, 720 or 1080")
         else:
             # Getting the absolute reddit post link
             self.postLink = requests.get(
@@ -143,32 +124,30 @@ class Download:
     # Getting the Audioless Video only file of a specified resolution from
     # Reddit
     def fetchVideo(self, quality, url):
-        try:
-            print(url, self.destination)
-            if self.destination is not None:
-                urllib.request.urlretrieve(
-                    url + f'/DASH_{quality}.mp4',
-                    self.destination + "Video.mp4")
-            else:
-                urllib.request.urlretrieve(
-                    url + f'/DASH_{quality}.mp4', "Video.mp4")
-        except BaseException:
+        qualityTypes = [144, 240, 360, 480, 720, 1080]
+        listIndex = qualityTypes.index(quality)
+        wasDownloadSuccessful = False
+        for quality in range(listIndex, -1, -1):
+            print(f'Trying resolution: {qualityTypes[quality]}p')
             try:
-                print(
-                    f'Error Downloading Video File May be an issue with avaliable quality at {quality}')
-                print(f'trying resolution:720 ')
-                urllib.request.urlretrieve(
-                    url + f'/DASH_720.mp4',
-                    self.destination + "Video.mp4")
-            except BaseException:
-                try:
-                    print(
-                        f'Error Downloading Video File May be an issue with avaliable quality at 720&1080')
-                    print(f'trying resolution:360 ')
+                if self.destination is not None:
                     urllib.request.urlretrieve(
-                        url + f'/DASH_360.mp4', self.destination + "Video.mp4")
-                except BaseException:
-                    print("Can't fetch the video file :(")
+                        url + f'/DASH_{qualityTypes[quality]}.mp4',
+                        self.destination + "Video.mp4")
+                    wasDownloadSuccessful = True
+                    print("Video File Downloaded Successfully")
+                else:
+                    urllib.request.urlretrieve(
+                        url + f'/DASH_{qualityTypes[quality]}.mp4', "Video.mp4")
+                    wasDownloadSuccessful = True
+                    print("Video File Downloaded Successfully")
+                break
+            except BaseException:
+                print(
+                    f'Video file not avaliable at {qualityTypes[quality]}p going to next resolution')
+                continue
+        if not wasDownloadSuccessful:
+            raise Exception("Can't fetch the video file")
 
     def fetchAudio(self, url):  # Function to get the audio of a video if any
         doc = requests.get(url + '/DASH_audio.mp4')
@@ -295,7 +274,7 @@ class DownloadBySubreddit:
             NumberOfPosts,
             flair=None,
             SortBy="hot",
-            quality=720,
+            quality=1080,
             output="downloaded",
             destination=None):
         if SortBy == "hot" or SortBy == "new" or SortBy == "top":
@@ -400,7 +379,7 @@ class DownloadImagesBySubreddit:
             NumberOfPosts,
             flair=None,
             SortBy="hot",
-            quality=720,
+            quality=1080,
             output="downloaded",
             destination=None):
         if SortBy == "hot" or SortBy == "new" or SortBy == "top":
@@ -505,7 +484,7 @@ class DownloadVideosBySubreddit:
             NumberOfPosts,
             flair=None,
             SortBy="hot",
-            quality=720,
+            quality=1080,
             output="downloaded",
             destination=None):
         if SortBy == "hot" or SortBy == "new" or SortBy == "top":
@@ -610,7 +589,7 @@ class DownloadGalleriesBySubreddit:
             NumberOfPosts,
             flair=None,
             SortBy="hot",
-            quality=720,
+            quality=1080,
             output="downloaded",
             destination=None):
         if SortBy == "hot" or SortBy == "new" or SortBy == "top":
