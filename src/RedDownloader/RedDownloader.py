@@ -259,6 +259,10 @@ class DownloadBySubreddit:
         destination : str
             The destination to save the file to.
             Default is None.
+        cachefile : str
+            The location of the cache file. use cache files to keep
+            a record of posts being downloaded so the duplicate files
+            won't get downloaded
 
     |Public Functions|
 
@@ -272,11 +276,12 @@ class DownloadBySubreddit:
             self,
             Subreddit,
             NumberOfPosts,
-            flair=None,
             SortBy="hot",
             quality=1080,
             output="downloaded",
-            destination=None):
+            destination=None,
+            cachefile=None,
+            flair=None):
         if SortBy == "hot" or SortBy == "new" or SortBy == "top":
             print("Fetching Posts...")
             try:
@@ -288,8 +293,31 @@ class DownloadBySubreddit:
                         'flair': flair,
                         'sort': SortBy})
                 Links = json.loads(self.PostLinks.content)
+
+                if cachefile is not None:
+                    if os.stat(cachefile).st_size == 0:
+                        with open(cachefile, 'w') as f:
+                            f.write(json.dumps([]))
+                            f.close()
+
+                    with open(cachefile, 'r') as f:
+                        self.cachedLinks = json.load(f)
+                        f.close()
+
+                    for link in Links:
+                        print(link, Links, len(Links))
+                        if link not in self.cachedLinks:
+                            self.cachedLinks.append(link)
+                        else:
+                            Links.remove(link)
+
+                    with open(cachefile, 'w') as f:
+                        json.dump(self.cachedLinks, f)
+                        f.close()
+
                 self.ProcessedLinks = Links
-                self.DownloadLinks(Links, quality, output, destination)
+                self.DownloadLinks(
+                    self.ProcessedLinks, quality, output, destination)
             except Exception as e:
                 print("Unable to fetch posts")
                 print(e)
@@ -364,6 +392,10 @@ class DownloadImagesBySubreddit:
         destination : str
             The destination to save the file to.
             Default is None.
+        cachefile : str
+            The location of the cache file. use cache files to keep
+            a record of posts being downloaded so the duplicate files
+            won't get downloaded
 
     |Public Functions|
 
@@ -377,11 +409,12 @@ class DownloadImagesBySubreddit:
             self,
             Subreddit,
             NumberOfPosts,
-            flair=None,
             SortBy="hot",
             quality=1080,
             output="downloaded",
-            destination=None):
+            destination=None,
+            flair=None,
+            cachefile=None):
         if SortBy == "hot" or SortBy == "new" or SortBy == "top":
             print("Fetching Posts...")
             try:
@@ -393,8 +426,31 @@ class DownloadImagesBySubreddit:
                         'flair': flair,
                         'sort': SortBy})
                 Links = json.loads(self.PostLinks.content)
+
+                if cachefile is not None:
+                    if os.stat(cachefile).st_size == 0:
+                        with open(cachefile, 'w') as f:
+                            f.write(json.dumps([]))
+                            f.close()
+
+                    with open(cachefile, 'r') as f:
+                        self.cachedLinks = json.load(f)
+                        f.close()
+
+                    for link in Links:
+                        print(link, Links, len(Links))
+                        if link not in self.cachedLinks:
+                            self.cachedLinks.append(link)
+                        else:
+                            Links.remove(link)
+
+                    with open(cachefile, 'w') as f:
+                        json.dump(self.cachedLinks, f)
+                        f.close()
+
                 self.ProcessedLinks = Links
-                self.DownloadLinks(Links, quality, output, destination)
+                self.DownloadLinks(
+                    self.ProcessedLinks, quality, output, destination)
             except Exception as e:
                 print("Unable to fetch posts")
                 print(e)
@@ -457,7 +513,8 @@ class DownloadVideosBySubreddit:
         flair : str
             The target flair to download post(s) from
         SortBy : str
-            The sort method to use. accepted values are:
+            The sort method to use.
+            accepted values are:
             'hot', 'new', 'top'
         quality : int
             The resolution to download the video at. Higher resolution
@@ -469,6 +526,10 @@ class DownloadVideosBySubreddit:
         destination : str
             The destination to save the file to.
             Default is None.
+        cachefile : str
+            The location of the cache file. use cache files to keep
+            a record of posts being downloaded so the duplicate files
+            won't get downloaded
 
     |Public Functions|
 
@@ -482,11 +543,12 @@ class DownloadVideosBySubreddit:
             self,
             Subreddit,
             NumberOfPosts,
-            flair=None,
             SortBy="hot",
             quality=1080,
             output="downloaded",
-            destination=None):
+            destination=None,
+            flair=None,
+            cachefile=None):
         if SortBy == "hot" or SortBy == "new" or SortBy == "top":
             print("Fetching Posts...")
             try:
@@ -498,8 +560,29 @@ class DownloadVideosBySubreddit:
                         'flair': flair,
                         'sort': SortBy})
                 Links = json.loads(self.PostLinks.content)
+                if cachefile is not None:
+                    if os.stat(cachefile).st_size == 0:
+                        with open(cachefile, 'w') as f:
+                            f.write(json.dumps([]))
+                            f.close()
+
+                    with open(cachefile, 'r') as f:
+                        self.cachedLinks = json.load(f)
+                        f.close()
+
+                    for link in Links:
+                        print(link, Links, len(Links))
+                        if link not in self.cachedLinks:
+                            self.cachedLinks.append(link)
+                        else:
+                            Links.remove(link)
+
+                    with open(cachefile, 'w') as f:
+                        json.dump(self.cachedLinks, f)
+                        f.close()
                 self.ProcessedLinks = Links
-                self.DownloadLinks(Links, quality, output, destination)
+                self.DownloadLinks(
+                    self.ProcessedLinks, quality, output, destination)
             except Exception as e:
                 print("Unable to fetch posts")
                 print(e)
@@ -574,6 +657,10 @@ class DownloadGalleriesBySubreddit:
         destination : str
             The destination to save the file to.
             Default is None.
+        cachefile : str
+            The location of the cache file. use cache files to keep
+            a record of posts being downloaded so the duplicate files
+            won't get downloaded
 
     |Public Functions|
 
@@ -587,11 +674,12 @@ class DownloadGalleriesBySubreddit:
             self,
             Subreddit,
             NumberOfPosts,
-            flair=None,
             SortBy="hot",
             quality=1080,
             output="downloaded",
-            destination=None):
+            destination=None,
+            flair=None,
+            cachefile=None):
         if SortBy == "hot" or SortBy == "new" or SortBy == "top":
             print("Fetching Posts...")
             try:
@@ -603,8 +691,29 @@ class DownloadGalleriesBySubreddit:
                         'flair': flair,
                         'sort': SortBy})
                 Links = json.loads(self.PostLinks.content)
+                if cachefile is not None:
+                    if os.stat(cachefile).st_size == 0:
+                        with open(cachefile, 'w') as f:
+                            f.write(json.dumps([]))
+                            f.close()
+
+                    with open(cachefile, 'r') as f:
+                        self.cachedLinks = json.load(f)
+                        f.close()
+
+                    for link in Links:
+                        print(link, Links, len(Links))
+                        if link not in self.cachedLinks:
+                            self.cachedLinks.append(link)
+                        else:
+                            Links.remove(link)
+
+                    with open(cachefile, 'w') as f:
+                        json.dump(self.cachedLinks, f)
+                        f.close()
                 self.ProcessedLinks = Links
-                self.DownloadLinks(Links, quality, output, destination)
+                self.DownloadLinks(
+                    self.ProcessedLinks, quality, output, destination)
             except Exception as e:
                 print("Unable to fetch posts")
                 print(e)
@@ -682,6 +791,7 @@ class GetPostAuthor:
     def Get(self):
         return self.PostAuthor
 
+
 class GetUser:
     '''
     This class is used to get the user information of a user using the reddit api.
@@ -713,11 +823,11 @@ class GetUser:
                     'Verified' : bool
                         whether the user is verified or not
 
-                    
+
             Returns the user information of the user.
     '''
 
-    def __init__(self , username):
+    def __init__(self, username):
         try:
             self.UserInfo = requests.get(
                 "https://jackhammer.pythonanywhere.com/reddit/user/info",
