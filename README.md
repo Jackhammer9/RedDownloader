@@ -209,3 +209,12 @@ RedDownloader.DownloadBySubreddit('memes' , 5 , cachefile='Downloaded.txt')
 ```
 
 This is especially beneficial if you would like to store different types of posts in different cache files. 
+
+
+## Star History
+
+<div align = "center">
+
+[![Star History Chart](https://api.star-history.com/svg?repos=JackhammerYT/RedDownloader&type=Date)](https://star-history.com/#JackhammerYT/RedDownloader&Date)
+
+</div>
