@@ -1,14 +1,43 @@
+<div align="center">
+    
+<img src= ".github/logo.png" height=250px width=250px>
+    
+</div>
+<br><br>
+
+<div align = "center">
+    
+
+![APM](https://img.shields.io/apm/l/vim-mode?logo=Github)   ![GitHub forks](https://img.shields.io/github/forks/JackhammerYT/RedDownloader?color=red&logo=Github&style=flat-square) ![GitHub watchers](https://img.shields.io/github/watchers/JackhammerYT/RedDownloader?logo=Github) ![GitHub Repo stars](https://img.shields.io/github/stars/JackhammerYT/RedDownloader?logo=Github) ![GitHub followers](https://img.shields.io/github/followers/JackhammerYT?logo=Github) 
+    
+</div>
+
+<div align = "center">
+    
+![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/JackhammerYT/RedDownloader?logo=Github)  ![GitHub closed issues](https://img.shields.io/github/issues-closed/JackhammerYT/RedDownloader?color=255%2C255%2C0&logo=Github)![GitHub repo size](https://img.shields.io/github/repo-size/JackhammerYT/RedDownloader?logo=Github)![GitHub release (latest by date)](https://img.shields.io/github/v/release/JackhammerYT/RedDownloader?display_name=tag&logo=Github)
+    
+</div>
+
+<div align = "center">
+    
+![PyPI - Downloads](https://img.shields.io/pypi/dm/RedDownloader?label=Pypi%20Downloads&logo=Pypi) ![PyPI](https://img.shields.io/pypi/v/RedDownloader?logo=pypi)
+    
+</div>
+
+<h1> Introduction </h1>
+
 A very easy to use library to download videos from reddit with sound without installing external installation of ffmpeg. The library can also be used to download pictures and even picture galleries all just with a reddit post link. With RedDownloader 3 you can access Reddit API methods without having your own bot with classes such as ```DownloadBySubreddit``` more on that below.
 note that this package does only download media from posts with images/video directly uploaded to reddit and not from sources like imgur or youtube / vimeo.
 
-Usage:
+<h1> Installation </h1>
 To Install the package:
 
 ```
 pip install RedDownloader
 ```
 
-To Import package just do:
+
+<h1> Usage </h1>
 
 ```python
 from RedDownloader import RedDownloader
