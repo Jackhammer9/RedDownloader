@@ -22,6 +22,6 @@ setuptools.setup(
     ],
     package_dir={"": "src"},
     packages=setuptools.find_packages(where="src"),
-    install_requires=['requests' , 'tqdm==4.62.3' , 'moviepy', 'pillow'],
+    install_requires=['requests' , 'tqdm==4.62.3' , 'moviepy', 'Pillow'],
     python_requires=">=3.6",
 )
