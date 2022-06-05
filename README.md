@@ -120,3 +120,57 @@ posts = RedDownloader.DownloadBySubreddit("python" , 5)
 authors = posts.GetPostAuthors()
 print(authors)
 ```
+
+
+<h1>New Features in RedDownloader 3.2.0:</h1>
+
+<h2> The GetUser Class </h2>
+
+You can now use the ```GetUser``` class to get information about a user with the following syntax
+
+```Python
+User = RedDownloader.GetUser("Jackhammer_YOUTUBE")
+print(User.Get())
+```
+
+This returns a dictionary with a couple of information:
+```
+Key : ReturnType
+    usage
+
+'AccountName' : str
+    the username of the user
+'ID' : str
+    the id of the user
+'CreationDate' : float
+    the date the user was created (in unix time)
+'CommentKarma' : int
+    the amount of comment karma the user has
+'LinkKarma' : int
+    the amount of link karma the user has
+'PremiumUser' : bool
+    whether the user has a premium account or not
+'Moderator' : bool
+    whether the user is a moderator or not
+'Verified' : bool
+    whether the user is verified or not
+```
+
+for suspended accounts only ```AccountName``` and ```Suspended``` as keys are avaliable
+
+
+<h2> Cache FIles </h2>
+
+A new argument called ```cachefile``` can now be used with following classes ```DownloadBySubreddit``` , ```DownloadImagesBySubreddit``` , ```DownloadVideosBySubreddit``` and ```DownloadGalleriesBySubreddit```.
+
+```cachefile``` is useful when you don't want to download an already download file with RedDownloader. Everytime you download posts with ```cachefile``` all the urls of downloaded posts are stored in the file, RedDownloader checks the url of post to be downloaded next time making sure duplicates are avoided. By default it is set to ```None``` meaning it won't be checking for duplicate downloads
+
+To use ```cachefile``` your virtual environment or work folder should already have a file, RedDownloader won't manually create cachefiles!!!
+
+If you have an empty file called ```Downloaded.txt``` to use cachefile you can simply do
+
+```python
+RedDownloader.DownloadBySubreddit('memes' , 5 , cachefile='Downloaded.txt')
+```
+
+This is especially beneficial if you would like to store different types of posts in different cache files. 
