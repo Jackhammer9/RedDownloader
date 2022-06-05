@@ -681,3 +681,53 @@ class GetPostAuthor:
 
     def Get(self):
         return self.PostAuthor
+
+class GetUser:
+    '''
+    This class is used to get the user information of a user using the reddit api.
+
+    ...
+
+    |Parameters|
+        username : str
+            The username of the user to get the information of.
+
+    |Public Functions|
+        Get()
+            Return Type: dict
+                Keys:
+                    'AccountName' : str
+                        the username of the user
+                    'ID' : str
+                        the id of the user
+                    'CreationDate' : float
+                        the date the user was created (in unix time)
+                    'CommentKarma' : int
+                        the amount of comment karma the user has
+                    'LinkKarma' : int
+                        the amount of link karma the user has
+                    'PremiumUser' : bool
+                        whether the user has a premium account or not
+                    'Moderator' : bool
+                        whether the user is a moderator or not
+                    'Verified' : bool
+                        whether the user is verified or not
+
+                    
+            Returns the user information of the user.
+    '''
+
+    def __init__(self , username):
+        try:
+            self.UserInfo = requests.get(
+                "https://jackhammer.pythonanywhere.com/reddit/user/info",
+                params={
+                    'username': username}).text
+            self.info = json.loads(self.UserInfo)
+            print(type(self.info))
+        except Exception as e:
+            print("Unable to fetch user info")
+            print(e)
+
+    def Get(self):
+        return self.info

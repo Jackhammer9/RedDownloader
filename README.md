@@ -41,7 +41,10 @@ you don't have to pass in extensions to the output parameter.
 
 default download location for file is current working directory.
 
-Another argument is the ```quality``` argument which defines the resolution to download if the filetype is a video the avaliable options to choose from are 144, 240, 360, 480, 720, 1080 please note that higher resolution would result in bigger file size. If a video file in specified resolution is not found it will try for a lower resolution.An example:
+Another argument is the ```quality``` argument which defines the resolution to download if the filetype is a video the avaliable options to choose from are 144, 240, 360, 480, 720, 1080 please note that higher resolution would result in bigger file size. If a video file in specified resolution is not found it will try for a lower resolution.
+Default: 1080p
+
+An example:
 
 ```python
 RedDownloader.Download(url , output="MyAwesomeRedditMedia" , quality = 1080)
