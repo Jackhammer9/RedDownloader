@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="RedDownloader",
-    version="3.2.0",
+    version="3.2.2",
     author="Arnav Bajaj",
     author_email="arnavbajaj9@gmail.com",
     description="A package to download Reddit hosted videos with sound without manual installation of ffmpeg and other media as well with the post's url",
@@ -13,11 +13,11 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/JackhammerYT/RedVidDownloader",
     project_urls={
-        "Bug Tracker": "https://github.com/JackhammerYT/RedVidDownloader/issues",
+        "Bug Tracker": "https://github.com/JackhammerYT/RedDownloader/issues",
     },
     classifiers=[
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
+        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Operating System :: OS Independent",
     ],
     package_dir={"": "src"},
