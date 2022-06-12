@@ -6,9 +6,18 @@
 <br><br>
 
 <div align = "center">
+
+
+<img src="https://img.shields.io/badge/License-GPLv3-blueviolet">
+
+
+</div>
+
+<div align = "center">
     
 
-![APM](https://img.shields.io/apm/l/vim-mode?logo=Github)   ![GitHub forks](https://img.shields.io/github/forks/JackhammerYT/RedDownloader?color=red&logo=Github&style=flat-square) ![GitHub watchers](https://img.shields.io/github/watchers/JackhammerYT/RedDownloader?logo=Github) ![GitHub Repo stars](https://img.shields.io/github/stars/JackhammerYT/RedDownloader?logo=Github) ![GitHub followers](https://img.shields.io/github/followers/JackhammerYT?logo=Github) 
+![GitHub forks](https://img.shields.io/github/forks/JackhammerYT/RedDownloader?color=red&logo=Github&style=flat-square) ![GitHub watchers](https://img.shields.io/github/watchers/JackhammerYT/RedDownloader?logo=Github) ![GitHub Repo stars](https://img.shields.io/github/stars/JackhammerYT/RedDownloader?logo=Github) ![GitHub followers](https://img.shields.io/github/followers/JackhammerYT?logo=Github) 
+
     
 </div>
 
@@ -215,9 +224,9 @@ RedDownloader.DownloadBySubreddit('memes' , 5 , cachefile='Downloaded.txt')
 This is especially beneficial if you would like to store different types of posts in different cache files. 
 
 
-<h1>New Features in RedDownloader 3.2.0:</h1>
+<h1>New Features in RedDownloader 3.2.1:</h1>
 
-<h2> The GetPostTitle Class </h2>
+<h2> The GetPostTitles && GetPostTitle Class </h2>
 
 You can now use the ```GetPostTitle``` class to get a post title from a given url the syntax followed is
  
@@ -229,6 +238,16 @@ print(title)
 For classes like ```DownloadBySubreddit``` , ```DownloadImagesBySubreddit``` , ```DownloadVideosBySubreddit``` and ```DownloadGalleriesBySubreddit``` there is a method ```GetPostTitles``` which returns a list of titles of the posts you just downloaded.
 
 And for regular ```Download``` class you can now use the ```GetPostTitle``` method to get a post title.
+
+<h2> The GetPostAudio Class </h2>
+
+You can now use the ```GetPostAudio``` class to get a post audio from a given url the syntax followed is
+     
+```python           
+audio = RedDownloader.GetPostAudio(url)
+```
+
+To change the file download destination you can set the ```destination``` argument to the path you want to download the file to. By default it downloads the file in the current working directory. To change to output file name you can set the ```output``` argument to the name of the file you want to download the audio to. By default it downloads the file with the name ```Audio.mp3```.
 
 
 ## Star History

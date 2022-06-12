@@ -901,6 +901,7 @@ class GetUser:
     def Get(self):
         return self.info
 
+
 class GetPostTitle:
     '''
     This class is used to get the title of a post using the reddit api.
@@ -911,7 +912,7 @@ class GetPostTitle:
 
         url : str
             The url of the post to get the title of.
-        
+
     |Public Functions|
 
         Get()
@@ -919,7 +920,7 @@ class GetPostTitle:
             Returns the title of the post.
     '''
 
-    def __init__(self , url):
+    def __init__(self, url):
         try:
             self.PostTitle = requests.get(
                 "http://jackhammer.pythonanywhere.com/reddit/media/title",
@@ -931,3 +932,58 @@ class GetPostTitle:
 
     def Get(self):
         return self.PostTitle
+
+
+class GetPostAudio:
+    '''
+    This class is used to get the audio of a post using the reddit api.
+
+    ...
+
+    |Parameters|
+
+        url : str
+            The url of the post to get the audio of.
+
+        destination : str
+            The destination to save the audio to.
+
+        output : str
+            The name of the file to be saved as audio.
+
+    '''
+
+    def __init__(self, url, destination=None, output=None):
+        self.url = url
+        self.postLink = requests.get(
+            "https://jackhammer.pythonanywhere.com/reddit/media/downloader",
+            params={
+                'url': self.url}).text
+        self.destination = destination
+
+        doc = requests.get(self.postLink + '/DASH_audio.mp4')
+
+        if doc.status_code == 200:
+            print('Downloading Audio...')
+            if self.destination is not None:
+                if not output:
+                    with open(os.path.join(self.destination, 'Audio.mp3'), 'wb') as f:
+                        f.write(doc.content)
+                        f.close()
+                else:
+                    with open(os.path.join(self.destination, f'{output}.mp3'), 'wb') as f:
+                        f.write(doc.content)
+                        f.close()
+            else:
+                if not output:
+                    with open('Audio.mp3', 'wb') as f:
+                        f.write(doc.content)
+                        f.close()
+                else:
+                    with open(output + '.mp3', 'wb') as f:
+                        f.write(doc.content)
+                        f.close()
+            print('Audio Downloaded Sucessfully...')
+
+        else:
+            raise Exception("Unable to download audio, audio not found...")
