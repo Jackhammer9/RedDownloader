@@ -13,7 +13,6 @@ import shutil
 # External Imports | Required Packages
 from moviepy.editor import *
 import requests
-from PIL import Image
 
 
 class Download:
@@ -45,6 +44,14 @@ class Download:
                 'v' for video
                 'g' for gallery
 
+            GetPostAuthor()
+                Return Type : str
+                Returns the author of the post.
+
+            GetPostTitle()
+                Return Type : str
+                Returns the title of the post.
+
     '''
 
     def __init__(
@@ -54,6 +61,7 @@ class Download:
             output="downloaded",
             destination=None):
         self.output = output
+        self.MainURL = url
         self.destination = destination
         qualityTypes = [144, 240, 360, 480, 720, 1080]
         if quality not in qualityTypes:  # if quality is not in the list
@@ -65,6 +73,11 @@ class Download:
                 "https://jackhammer.pythonanywhere.com/reddit/media/downloader",
                 params={
                     'url': url}).text
+            try:
+                self.PostAuthor = GetPostAuthor(url)
+            except Exception as e:
+                pass
+
             if 'v.redd.it' in self.postLink:  # if the post is a video
                 print("Detected Post Type: Video")
                 self.mediaType = "v"
@@ -229,6 +242,12 @@ class Download:
         else:
             return None
 
+    def GetPostAuthor(self):
+        return GetPostAuthor(self.MainURL)
+
+    def GetPostTitle(self):
+        return GetPostTitle(self.MainURL)
+
 
 class DownloadBySubreddit:
     '''
@@ -269,6 +288,10 @@ class DownloadBySubreddit:
         GetPostAuthors()
             Return Type: List
             Returns a list of the authors of the posts.
+
+        GetPostTitles()
+            Return Type: List
+            Returns a list of the titles of the posts.
 
     '''
 
@@ -363,6 +386,12 @@ class DownloadBySubreddit:
             Authors.append(GetPostAuthor(author).Get())
         return Authors
 
+    def GetPostTitles(self):
+        Titles = []
+        for title in self.ProcessedLinks:
+            Titles.append(GetPostTitle(title).Get())
+        return Titles
+
 
 class DownloadImagesBySubreddit:
     '''
@@ -402,6 +431,10 @@ class DownloadImagesBySubreddit:
         GetPostAuthors()
             Return Type: List
             Returns a list of the authors of the posts.
+
+        GetPostTitles()
+            Return Type: List
+            Returns a list of the titles of the posts.
 
     '''
 
@@ -496,6 +529,12 @@ class DownloadImagesBySubreddit:
             Authors.append(GetPostAuthor(author).Get())
         return Authors
 
+    def GetPostTitles(self):
+        Titles = []
+        for title in self.ProcessedLinks:
+            Titles.append(GetPostTitle(title).Get())
+        return Titles
+
 
 class DownloadVideosBySubreddit:
     '''
@@ -536,6 +575,10 @@ class DownloadVideosBySubreddit:
         GetPostAuthors()
             Return Type: List
             Returns a list of the authors of the posts.
+
+        GetPostTitles()
+            Return Type: List
+            Returns a list of the titles of the posts.
 
     '''
 
@@ -628,6 +671,12 @@ class DownloadVideosBySubreddit:
             Authors.append(GetPostAuthor(author).Get())
         return Authors
 
+    def GetPostTitles(self):
+        Titles = []
+        for title in self.ProcessedLinks:
+            Titles.append(GetPostTitle(title).Get())
+        return Titles
+
 
 class DownloadGalleriesBySubreddit:
     '''
@@ -667,6 +716,10 @@ class DownloadGalleriesBySubreddit:
         GetPostAuthors()
             Return Type: List
             Returns a list of the authors of the posts.
+
+        GetPostTitles()
+            Return Type: List
+            Returns a list of the titles of the posts.
 
     '''
 
@@ -759,6 +812,12 @@ class DownloadGalleriesBySubreddit:
             Authors.append(GetPostAuthor(author).Get())
         return Authors
 
+    def GetPostTitles(self):
+        Titles = []
+        for title in self.ProcessedLinks:
+            Titles.append(GetPostTitle(title).Get())
+        return Titles
+
 
 class GetPostAuthor:
     '''
@@ -841,3 +900,34 @@ class GetUser:
 
     def Get(self):
         return self.info
+
+class GetPostTitle:
+    '''
+    This class is used to get the title of a post using the reddit api.
+
+    ...
+
+    |Parameters|
+
+        url : str
+            The url of the post to get the title of.
+        
+    |Public Functions|
+
+        Get()
+            Return Type: str
+            Returns the title of the post.
+    '''
+
+    def __init__(self , url):
+        try:
+            self.PostTitle = requests.get(
+                "http://jackhammer.pythonanywhere.com/reddit/media/title",
+                params={
+                    'url': url}).text
+        except Exception as e:
+            print("Unable to fetch post title")
+            print(e)
+
+    def Get(self):
+        return self.PostTitle
