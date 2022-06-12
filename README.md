@@ -1,6 +1,6 @@
 <div align="center">
     
-<img src= ".github/logo.png" height=250px width=250px>
+<img src= "[.github/logo.png](https://raw.githubusercontent.com/JackhammerYT/RedDownloader/main/.github/logo.png)" height=250px width=250px>
     
 </div>
 <br><br>
