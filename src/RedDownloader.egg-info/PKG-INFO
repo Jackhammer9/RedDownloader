@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: RedDownloader
-Version: 3.2.2
+Version: 3.2.3
 Summary: A package to download Reddit hosted videos with sound without manual installation of ffmpeg and other media as well with the post's url
 Home-page: https://github.com/JackhammerYT/RedVidDownloader
 Author: Arnav Bajaj
@@ -15,7 +15,7 @@ License-File: LICENSE
 
 <div align="center">
     
-<img src= ".github/logo.png" height=250px width=250px>
+<img src= "https://raw.githubusercontent.com/JackhammerYT/RedDownloader/main/.github/logo.png" height=250px width=250px>
     
 </div>
 <br><br>
@@ -239,7 +239,7 @@ RedDownloader.DownloadBySubreddit('memes' , 5 , cachefile='Downloaded.txt')
 This is especially beneficial if you would like to store different types of posts in different cache files. 
 
 
-<h1>New Features in RedDownloader 3.2.2:</h1>
+<h1>New Features in RedDownloader 3.2.1:</h1>
 
 <h2> The GetPostTitles && GetPostTitle Class </h2>
 
