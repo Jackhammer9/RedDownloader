@@ -215,9 +215,9 @@ RedDownloader.DownloadBySubreddit('memes' , 5 , cachefile='Downloaded.txt')
 This is especially beneficial if you would like to store different types of posts in different cache files. 
 
 
-<h1>New Features in RedDownloader 3.2.0:</h1>
+<h1>New Features in RedDownloader 3.2.1:</h1>
 
-<h2> The GetPostTitle Class </h2>
+<h2> The GetPostTitles && GetPostTitle Class </h2>
 
 You can now use the ```GetPostTitle``` class to get a post title from a given url the syntax followed is
  
