@@ -100,7 +100,7 @@ file = RedDownloader.Download(url)
 print(file.GetMediaType())
 ```
 
-for images it returns a ```i```  for videos it returns a ```v``` and for a gallery post it returns a ```g```
+for images it returns a ```i```  for videos it returns a ```v``` and for a gallery post it returns a ```g``` and a ```gif``` for a gif.
 
 The package has been tested for videos with no sound as well.
 
