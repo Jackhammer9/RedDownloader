@@ -1,5 +1,5 @@
 '''
-This is the main source file for RedDownloader Version 3.1.1 with it's primary
+This is the main source file for RedDownloader Version 3.2.4 with it's primary
 usage being downloading Reddit Posts i.e Image Posts , Videos , Gifs , Gallery
 Posts.
 '''
@@ -43,6 +43,7 @@ class Download:
                 'i' for image
                 'v' for video
                 'g' for gallery
+                'gif' for gifs
 
             GetPostAuthor()
                 Return Type : str
@@ -83,15 +84,26 @@ class Download:
                 self.mediaType = "v"
                 self.InitiateVideo(quality, self.postLink)
             elif 'i.redd.it' in self.postLink:  # if the post is an image
-                print("Detected Post Type: Image")
-                self.mediaType = "i"
-                imageData = requests.get(self.postLink).content
-                file = open(f'{self.output}' + '.jpeg', 'wb')
-                file.write(imageData)
-                file.close()
-                print("Sucessfully Downloaded Image " + f"{self.output}")
-                if self.destination is not None:
-                    shutil.move(f"{self.output}.jpeg", self.destination)
+                if not self.postLink.endswith('.gif') and not self.postLink.endswith('.GIF') and not self.postLink.endswith('.gifv') and not self.postLink.endswith('.GIFV'):
+                    print("Detected Post Type: Image")
+                    self.mediaType = "i"
+                    imageData = requests.get(self.postLink).content
+                    file = open(f'{self.output}' + '.jpeg', 'wb')
+                    file.write(imageData)
+                    file.close()
+                    print("Sucessfully Downloaded Image: " + f"{self.output}")
+                    if self.destination is not None:
+                        shutil.move(f"{self.output}.jpeg", self.destination)
+                else:
+                    print("Detected Post Type: Gif")
+                    self.mediaType = "gif"
+                    GifData = requests.get(self.postLink).content
+                    file = open(f'{self.output}' + '.gif', 'wb')
+                    file.write(GifData)
+                    file.close()
+                    print("Sucessfully Downloaded Gif: " + f"{self.output}")
+                    if self.destination is not None:
+                        shutil.move(f"{self.output}.gif", self.destination)
             elif '/gallery/' in self.postLink:  # if the post is a gallery
                 print("Detected Post Type: Gallery")
                 self.mediaType = 'g'
@@ -113,6 +125,7 @@ class Download:
                 print("Error: Could Not Recoganize Post Type")
 
     def GetGallery(self, posts):  # Function to download and merge all images in a directory
+
         TotalPosts = len(posts)
         print("Total images to be downloaded: ", TotalPosts)
         for i in range(TotalPosts):
@@ -137,6 +150,7 @@ class Download:
     # Getting the Audioless Video only file of a specified resolution from
     # Reddit
     def fetchVideo(self, quality, url):
+
         qualityTypes = [144, 240, 360, 480, 720, 1080]
         listIndex = qualityTypes.index(quality)
         wasDownloadSuccessful = False
@@ -212,6 +226,7 @@ class Download:
     # Function to remove the unnecessary files as well as temporary
     # directories and files
     def CleanUp(self, videoOnly=False):
+
         print('cleaning')
         try:
             if self.destination is not None:
@@ -328,7 +343,6 @@ class DownloadBySubreddit:
                         f.close()
 
                     for link in Links:
-                        print(link, Links, len(Links))
                         if link not in self.cachedLinks:
                             self.cachedLinks.append(link)
                         else:
@@ -471,7 +485,6 @@ class DownloadImagesBySubreddit:
                         f.close()
 
                     for link in Links:
-                        print(link, Links, len(Links))
                         if link not in self.cachedLinks:
                             self.cachedLinks.append(link)
                         else:
@@ -755,7 +768,6 @@ class DownloadGalleriesBySubreddit:
                         f.close()
 
                     for link in Links:
-                        print(link, Links, len(Links))
                         if link not in self.cachedLinks:
                             self.cachedLinks.append(link)
                         else:
@@ -893,7 +905,6 @@ class GetUser:
                 params={
                     'username': username}).text
             self.info = json.loads(self.UserInfo)
-            print(type(self.info))
         except Exception as e:
             print("Unable to fetch user info")
             print(e)
