@@ -1,5 +1,5 @@
 '''
-This is the main source file for RedDownloader Version 3.2.4 with it's primary
+This is the main source file for RedDownloader Version 3.2.5 with it's primary
 usage being downloading Reddit Posts i.e Image Posts , Videos , Gifs , Gallery
 Posts.
 '''
@@ -342,11 +342,16 @@ class DownloadBySubreddit:
                         self.cachedLinks = json.load(f)
                         f.close()
 
+                    ToBeRemoved = []
                     for link in Links:
+
                         if link not in self.cachedLinks:
                             self.cachedLinks.append(link)
                         else:
-                            Links.remove(link)
+                            ToBeRemoved.append(link)
+                    
+                    for link in ToBeRemoved:
+                        Links.remove(link)
 
                     with open(cachefile, 'w') as f:
                         json.dump(self.cachedLinks, f)
@@ -484,11 +489,16 @@ class DownloadImagesBySubreddit:
                         self.cachedLinks = json.load(f)
                         f.close()
 
+                    ToBeRemoved = []
                     for link in Links:
+                        print(link)
                         if link not in self.cachedLinks:
                             self.cachedLinks.append(link)
                         else:
-                            Links.remove(link)
+                            ToBeRemoved.append(link)
+                    
+                    for link in ToBeRemoved:
+                        Links.remove(link)
 
                     with open(cachefile, 'w') as f:
                         json.dump(self.cachedLinks, f)
@@ -616,6 +626,7 @@ class DownloadVideosBySubreddit:
                         'flair': flair,
                         'sort': SortBy})
                 Links = json.loads(self.PostLinks.content)
+
                 if cachefile is not None:
                     if os.stat(cachefile).st_size == 0:
                         with open(cachefile, 'w') as f:
@@ -626,16 +637,21 @@ class DownloadVideosBySubreddit:
                         self.cachedLinks = json.load(f)
                         f.close()
 
+                    ToBeRemoved = []
                     for link in Links:
-                        print(link, Links, len(Links))
+                        print(link)
                         if link not in self.cachedLinks:
                             self.cachedLinks.append(link)
                         else:
-                            Links.remove(link)
+                            ToBeRemoved.append(link)
+                    
+                    for link in ToBeRemoved:
+                        Links.remove(link)
 
                     with open(cachefile, 'w') as f:
                         json.dump(self.cachedLinks, f)
                         f.close()
+
                 self.ProcessedLinks = Links
                 self.DownloadLinks(
                     self.ProcessedLinks, quality, output, destination)
@@ -757,6 +773,7 @@ class DownloadGalleriesBySubreddit:
                         'flair': flair,
                         'sort': SortBy})
                 Links = json.loads(self.PostLinks.content)
+
                 if cachefile is not None:
                     if os.stat(cachefile).st_size == 0:
                         with open(cachefile, 'w') as f:
@@ -767,15 +784,21 @@ class DownloadGalleriesBySubreddit:
                         self.cachedLinks = json.load(f)
                         f.close()
 
+                    ToBeRemoved = []
                     for link in Links:
+                        print(link)
                         if link not in self.cachedLinks:
                             self.cachedLinks.append(link)
                         else:
-                            Links.remove(link)
+                            ToBeRemoved.append(link)
+                    
+                    for link in ToBeRemoved:
+                        Links.remove(link)
 
                     with open(cachefile, 'w') as f:
                         json.dump(self.cachedLinks, f)
                         f.close()
+
                 self.ProcessedLinks = Links
                 self.DownloadLinks(
                     self.ProcessedLinks, quality, output, destination)

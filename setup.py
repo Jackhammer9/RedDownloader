@@ -5,10 +5,10 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="RedDownloader",
-    version="3.2.4",
+    version="3.2.5",
     author="Arnav Bajaj",
     author_email="arnavbajaj9@gmail.com",
-    description="A package to download Reddit hosted videos with sound without manual installation of ffmpeg and other media as well with the post's url",
+    description="A package to download Reddit hosted videos easily and efficiently.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/JackhammerYT/RedVidDownloader",

@@ -1,7 +1,7 @@
 Metadata-Version: 2.1
 Name: RedDownloader
-Version: 3.2.4
-Summary: A package to download Reddit hosted videos with sound without manual installation of ffmpeg and other media as well with the post's url
+Version: 3.2.5
+Summary: A package to download Reddit hosted videos easily and efficiently.
 Home-page: https://github.com/JackhammerYT/RedVidDownloader
 Author: Arnav Bajaj
 Author-email: arnavbajaj9@gmail.com
@@ -56,8 +56,9 @@ License-File: LICENSE
 
 <h1> Introduction </h1>
 
-A very easy to use library to download videos from reddit with sound without installing external installation of ffmpeg. The library can also be used to download pictures and even picture galleries all just with a reddit post link. With RedDownloader 3 you can access Reddit API methods without having your own bot with classes such as ```DownloadBySubreddit``` more on that below.
-note that this package does only download media from posts with images/video directly uploaded to reddit and not from sources like imgur or youtube / vimeo.
+A very easy to use library to download videos from reddit with sound. The library can also be used to download pictures and even picture galleries all just with a reddit post link. You can access Reddit API methods without having your own bot with classes such as ```DownloadBySubreddit``` more on that below.
+
+<b>NOTE: </b> this package only downloads media from posts with images/video directly uploaded to reddit and not from sources like imgur or youtube / vimeo which are posted to Reddit.
 
 <h1> Installation </h1>
 To Install the package:
