@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="RedDownloader",
-    version="3.2.5",
+    version="3.3.0",
     author="Arnav Bajaj",
     author_email="arnavbajaj9@gmail.com",
     description="A package to download Reddit hosted videos easily and efficiently.",

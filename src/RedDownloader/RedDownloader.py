@@ -1,5 +1,5 @@
 '''
-This is the main source file for RedDownloader Version 3.2.5 with it's primary
+This is the main source file for RedDownloader Version 3.3.0 with it's primary
 usage being downloading Reddit Posts i.e Image Posts , Videos , Gifs , Gallery
 Posts.
 '''
@@ -77,7 +77,7 @@ class Download:
             try:
                 self.PostAuthor = GetPostAuthor(url)
             except Exception as e:
-                pass
+                print(e)
 
             if 'v.redd.it' in self.postLink:  # if the post is a video
                 print("Detected Post Type: Video")
@@ -142,8 +142,9 @@ class Download:
             self.fetchVideo(quality, url)
             print('Fetching Audio...')
             self.fetchAudio(url)
-        except BaseException:
+        except BaseException as e:
             print("Sorry there was an error while fetching video/audio files")
+            print("\nTraceback:\n",e)
         else:
             self.MergeVideo()
 
@@ -169,7 +170,8 @@ class Download:
                     wasDownloadSuccessful = True
                     print("Video File Downloaded Successfully")
                 break
-            except BaseException:
+            except BaseException as e:
+                print(e)
                 print(
                     f'Video file not avaliable at {qualityTypes[quality]}p going to next resolution')
                 continue
@@ -242,12 +244,18 @@ class Download:
                 os.remove("Video.mp4")
         else:
             try:
-                os.rename(
-                    self.destination +
-                    "Video.mp4",
-                    self.destination +
-                    self.output +
-                    ".mp4")
+                if self.destination is not None:
+                    os.rename(
+                        self.destination +
+                        "Video.mp4",
+                        self.destination +
+                        self.output +
+                        ".mp4")
+                else:
+                    os.rename(
+                        "Video.mp4",
+                        self.output +
+                        ".mp4")
             except Exception as e:
                 print(e)
 
@@ -1021,3 +1029,4 @@ class GetPostAudio:
 
         else:
             raise Exception("Unable to download audio, audio not found...")
+
