@@ -107,7 +107,10 @@ class Download:
             elif '/gallery/' in self.postLink:  # if the post is a gallery
                 print("Detected Post Type: Gallery")
                 self.mediaType = 'g'
-                self.directory = os.path.join(self.destination, self.output)
+                if self.destination == None:
+                    self.directory = self.output
+                else:
+                    self.directory = os.path.join(self.destination, self.output)
                 try:
                     # making a directory for the gallery
                     os.mkdir(self.directory)
@@ -1030,3 +1033,22 @@ class GetPostAudio:
         else:
             raise Exception("Unable to download audio, audio not found...")
 
+
+"""
+Below are some test lines to make sure all RedDownloader Features are working well. Uncomment them and run them if you want to test
+out specific files or are facing issues with RedDownloader.
+"""
+## Test For Image Downloading
+#Download("https://www.reddit.com/r/memes/comments/xfhe9j/my_brain_haha_fuck_you_losah/", output="Image")
+
+## Test For Video Downloading
+#Download("https://www.reddit.com/r/Unity2D/comments/xfadpb/trying_to_make_new_over_the_top_spells_for_our/", output="VideoTest")
+
+## Test For Gallery Posts
+#Download("https://www.reddit.com/r/pics/comments/xevl7p/a_magnetic_knife_strip_felt_too_small_in_the/", output="Gallery")
+
+## Test for Gif Files
+#Download("https://www.reddit.com/r/dankmemes/comments/xfmqqn/thats_what_facebook_said/", output="Gif")
+
+## Test For Using Reddit API Features
+#DownloadBySubreddit("memes", 5, output="Subreddit API")
