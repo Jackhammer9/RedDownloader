@@ -244,7 +244,8 @@ class Download:
             if self.destination is not None:
                 os.remove(self.destination + "Video.mp4")
             else:
-                os.remove("Video.mp4")
+                if self.output.lower() != "video":
+                    os.remove("Video.mp4")
         else:
             try:
                 if self.destination is not None:
