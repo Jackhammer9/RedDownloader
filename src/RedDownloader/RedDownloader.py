@@ -13,6 +13,7 @@ import shutil
 # External Imports | Required Packages
 from moviepy.editor import *
 import requests
+from pytube import YouTube 
 
 
 class Download:
@@ -124,6 +125,29 @@ class Download:
                         'url': self.postLink})
                 posts = json.loads(self.GalleryPosts.content)
                 self.GetGallery(posts)
+
+            elif "youtu.be" in self.postLink or "youtube.com" in self.postLink:
+                print("Type Detected: Youtube Video")
+                self.mediaType = "yt"
+
+                try:
+                    print("Downloading Youtube Video")
+                    yt = YouTube(self.postLink)
+                    videoTitle = yt.title
+                    stream = yt.streams.filter(progressive=True, file_extension='mp4').order_by('resolution')[-1]
+                    if self.destination == None:
+                        stream.download('.')
+                        os.rename(videoTitle+".mp4",self.output+".mp4")
+                    else:
+                        stream.download(self.destination)
+                        os.rename(os.path.join(self.destination,videoTitle) +".mp4",os.path.join(self.destination,self.output)+".mp4")
+
+                    print("Downloaded Sucessfully...")
+
+                except Exception as e:
+                    print("Connection Error")
+                    print(e)
+        
             else:
                 print("Error: Could Not Recoganize Post Type")
 
@@ -1053,3 +1077,6 @@ out specific files or are facing issues with RedDownloader.
 
 ## Test For Using Reddit API Features
 #DownloadBySubreddit("memes", 5, output="Subreddit API")
+
+## Test For Youtube Links
+##Download("https://www.reddit.com/r/videos/comments/xi89wf/this_guy_made_a_1hz_cpu_in_minecraft_to_run/", output="videoTest")
