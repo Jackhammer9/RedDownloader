@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: RedDownloader
-Version: 3.3.0
+Version: 4.0
 Summary: A package to download Reddit hosted videos easily and efficiently.
 Home-page: https://github.com/JackhammerYT/RedVidDownloader
 Author: Arnav Bajaj
@@ -58,7 +58,7 @@ License-File: LICENSE
 
 A very easy to use Reddit Media Downloader. The library can also be used to download pictures and even picture galleries all just with a reddit post link. You can access Reddit API methods without having your own bot with classes such as ```DownloadBySubreddit``` more on that below.
 
-<b>NOTE: </b> this package only downloads media from posts with images/video directly uploaded to reddit and not from sources like imgur or youtube / vimeo which are posted to Reddit.
+<b>NOTE: </b> As of RedDownloader 4 only Youtube and Imgur Single Image Posts are supported
 
 <h1> Installation </h1>
 To Install the package:
@@ -264,6 +264,15 @@ audio = RedDownloader.GetPostAudio(url)
 ```
 
 To change the file download destination you can set the ```destination``` argument to the path you want to download the file to. By default it downloads the file in the current working directory. To change to output file name you can set the ```output``` argument to the name of the file you want to download the audio to. By default it downloads the file with the name ```Audio.mp3```.
+
+<h1>New Features in RedDownloader 4.0:</h1>
+
+<h2> Youtube and Imgur Support</h2>
+
+Starting RedDownloader 4 you can download reddit posts which link to a youtube video and imgur single files.
+<b>NOTE:</b> Imgur Album links are not yet supported
+
+Any Version previous to RedDownloader 4 would yield a ```Post Not Recoganized Error```
 
 
 ## Star History
