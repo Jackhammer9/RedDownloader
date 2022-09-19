@@ -1,7 +1,7 @@
 '''
-This is the main source file for RedDownloader Version 3.3.0 with it's primary
+This is the main source file for RedDownloader Version 4.0 with it's primary
 usage being downloading Reddit Posts i.e Image Posts , Videos , Gifs , Gallery
-Posts.
+Posts with additional support for Youtube links and Imgur Links.
 '''
 
 # Internal Imports
@@ -147,6 +147,21 @@ class Download:
                 except Exception as e:
                     print("Connection Error")
                     print(e)
+
+            elif "i.imgur.com" in self.postLink:
+                print("Detected Post Type: Imgur Image")
+                self.mediaType = "imgur"
+                imageData = requests.get(self.postLink).content
+                file = open(f'{self.output}' + '.jpeg', 'wb')
+                file.write(imageData)
+                file.close()
+                print("Sucessfully Downloaded Image: " + f"{self.output}")
+                if self.destination is not None:
+                    shutil.move(f"{self.output}.jpeg", self.destination)
+
+            elif "imgur.com" in self.postLink:
+                print("Detected Post Type: Imgur Album")
+                print("Support for imgur album posts has not yet been added")
         
             else:
                 print("Error: Could Not Recoganize Post Type")
@@ -1079,4 +1094,7 @@ out specific files or are facing issues with RedDownloader.
 #DownloadBySubreddit("memes", 5, output="Subreddit API")
 
 ## Test For Youtube Links
-##Download("https://www.reddit.com/r/videos/comments/xi89wf/this_guy_made_a_1hz_cpu_in_minecraft_to_run/", output="videoTest")
+#Download("https://www.reddit.com/r/videos/comments/xi89wf/this_guy_made_a_1hz_cpu_in_minecraft_to_run/", output="videoTest")
+
+## Test For Imgur Posts
+#Download("https://www.reddit.com/r/pics/comments/xbzjbv/my_grandparents_100_yearolddresser_prerestoration/",destination="D:/Python")
