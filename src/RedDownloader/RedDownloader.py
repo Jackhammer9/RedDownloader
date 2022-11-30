@@ -133,14 +133,11 @@ class Download:
                 try:
                     print("Downloading Youtube Video")
                     yt = YouTube(self.postLink)
-                    videoTitle = yt.title
                     stream = yt.streams.filter(progressive=True, file_extension='mp4').order_by('resolution')[-1]
                     if self.destination == None:
-                        stream.download('.')
-                        os.rename(videoTitle+".mp4",self.output+".mp4")
+                        stream.download('.',filename=self.output+".mp4")
                     else:
-                        stream.download(self.destination)
-                        os.rename(os.path.join(self.destination,videoTitle) +".mp4",os.path.join(self.destination,self.output)+".mp4")
+                        stream.download(self.destination,filename=self.output+".mp4")
 
                     print("Downloaded Sucessfully...")
 
@@ -1094,7 +1091,7 @@ out specific files or are facing issues with RedDownloader.
 #DownloadBySubreddit("memes", 5, output="Subreddit API")
 
 ## Test For Youtube Links
-#Download("https://www.reddit.com/r/videos/comments/xi89wf/this_guy_made_a_1hz_cpu_in_minecraft_to_run/", output="videoTest")
+#Download("https://www.reddit.com/r/videos/comments/xi89wf/this_guy_made_a_1hz_cpu_in_minecraft_to_run/", output="gdfgn!" , destination="D:/Python")
 
 ## Test For Imgur Posts
 #Download("https://www.reddit.com/r/pics/comments/xbzjbv/my_grandparents_100_yearolddresser_prerestoration/",destination="D:/Python")
