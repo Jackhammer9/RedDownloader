@@ -133,7 +133,6 @@ class Download:
                 try:
                     print("Downloading Youtube Video")
                     yt = YouTube(self.postLink)
-                    videoTitle = yt.title
                     stream = yt.streams.filter(progressive=True, file_extension='mp4').order_by('resolution')[-1]
                     if self.destination == None:
                         stream.download('.',filename=self.output+".mp4")
