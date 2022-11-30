@@ -161,7 +161,7 @@ class Download:
                 print("Support for imgur album posts has not yet been added")
         
             else:
-                print("Error: Could Not Recoganize Post Type")
+                print("Error: Could Not Recognize Post Type")
 
     def GetGallery(self, posts):  # Function to download and merge all images in a directory
 

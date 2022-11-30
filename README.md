@@ -67,6 +67,12 @@ After importing, Downloading is just a single line of code
 RedDownloader.Download(url)
 ```
 
+so if you want to download a post from the post with url -> https://www.reddit.com/r/videos/comments/xi89wf/this_guy_made_a_1hz_cpu_in_minecraft_to_run/ you would do something like:
+
+```python
+RedDownloader.Download("https://www.reddit.com/r/videos/comments/xi89wf/this_guy_made_a_1hz_cpu_in_minecraft_to_run/")
+```
+
 This will automatically download media from the passed url it would automatically detect if it's a picture/video/gallery with default options. to pass in an output filename just pass in the output parameter as:
 
 ```python
