@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: RedDownloader
-Version: 4.1.1
+Version: 4.1.2
 Summary: A package to download Reddit hosted videos easily and efficiently.
 Home-page: https://github.com/JackhammerYT/RedVidDownloader
 Author: Arnav Bajaj
@@ -279,6 +279,18 @@ Starting RedDownloader 4 you can download reddit posts which link to a youtube v
 <b>NOTE:</b> Imgur Album links are not yet supported
 
 Any Version previous to RedDownloader 4 would yield a ```Post Not Recoganized Error```
+
+<h1>New Features in RedDownloader 4.1.1:</h1>
+
+<h2>Verbose Enabling/Disabling [Silent Mode]</h2>
+
+Starting RedDownloader 4.1.1 you can disable verbose i.e the ability to download posts without logging anything to the console for a cleaner experience.
+By default Verbose is set to ```True``` That is all the progress is logged to console
+
+All Classes accept ```verbose``` as an argument so to disable verbose you can do:
+```DownloadBySubreddit("memes", 5, output="Funny Memes" , verbose=False)```
+
+Trying to use verbose with any version previous to RedDownloader 4.1.1 would yield a ```got an unexpected keyword argument``` error
 
 
 ## Star History

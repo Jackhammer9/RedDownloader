@@ -1,10 +1,10 @@
 '''
-This is the main source file for RedDownloader Version 4.0 with it's primary
+This is the main source file for RedDownloader Version 4.1.2 with it's primary
 usage being downloading Reddit Posts i.e Image Posts , Videos , Gifs , Gallery
 Posts with additional support for Youtube links and Imgur Links.
 '''
 
-# Internal Imports
+# Internal Imports | Pre Installed Packages
 import urllib.request
 import json
 import os
@@ -14,6 +14,9 @@ import shutil
 from moviepy.editor import *
 import requests
 from pytube import YouTube 
+
+#Other Script Refference
+from Utils import Logger
 
 
 class Download:
@@ -35,6 +38,11 @@ class Download:
                 Output file name.
             destination: str
                 The path destination where file will be downloaded.
+            verbose: bool
+                Controls wether the logger should print progress to
+                console or not
+                Set It To True (Default) to print the progress
+                Set It To False to not print the progress
 
         |Public Functions|
 
@@ -61,11 +69,14 @@ class Download:
             url,
             quality=1080,
             output="downloaded",
-            destination=None):
+            destination=None,
+            verbose=True):
         self.output = output
         self.MainURL = url
         self.destination = destination
         qualityTypes = [144, 240, 360, 480, 720, 1080]
+        self.verbose = verbose
+        self.Logger = Logger(self.verbose)
         if quality not in qualityTypes:  # if quality is not in the list
             raise Exception("Error: Unkown Quality Type" +  # Throw an error
                             f" {quality} choose either 144, 240, 360, 480, 720 or 1080")
@@ -78,35 +89,35 @@ class Download:
             try:
                 self.PostAuthor = GetPostAuthor(url)
             except Exception as e:
-                print(e)
+                self.Logger.LogInfo(e)
 
             if 'v.redd.it' in self.postLink:  # if the post is a video
-                print("Detected Post Type: Video")
+                self.Logger.LogInfo("Detected Post Type: Video")
                 self.mediaType = "v"
                 self.InitiateVideo(quality, self.postLink)
             elif 'i.redd.it' in self.postLink:  # if the post is an image
                 if not self.postLink.endswith('.gif') and not self.postLink.endswith('.GIF') and not self.postLink.endswith('.gifv') and not self.postLink.endswith('.GIFV'):
-                    print("Detected Post Type: Image")
+                    self.Logger.LogInfo("Detected Post Type: Image")
                     self.mediaType = "i"
                     imageData = requests.get(self.postLink).content
                     file = open(f'{self.output}' + '.jpeg', 'wb')
                     file.write(imageData)
                     file.close()
-                    print("Sucessfully Downloaded Image: " + f"{self.output}")
+                    self.Logger.LogInfo("Sucessfully Downloaded Image: " + f"{self.output}")
                     if self.destination is not None:
                         shutil.move(f"{self.output}.jpeg", self.destination)
                 else:
-                    print("Detected Post Type: Gif")
+                    self.Logger.LogInfo("Detected Post Type: Gif")
                     self.mediaType = "gif"
                     GifData = requests.get(self.postLink).content
                     file = open(f'{self.output}' + '.gif', 'wb')
                     file.write(GifData)
                     file.close()
-                    print("Sucessfully Downloaded Gif: " + f"{self.output}")
+                    self.Logger.LogInfo("Sucessfully Downloaded Gif: " + f"{self.output}")
                     if self.destination is not None:
                         shutil.move(f"{self.output}.gif", self.destination)
             elif '/gallery/' in self.postLink:  # if the post is a gallery
-                print("Detected Post Type: Gallery")
+                self.Logger.LogInfo("Detected Post Type: Gallery")
                 self.mediaType = 'g'
                 if self.destination == None:
                     self.directory = self.output
@@ -117,7 +128,7 @@ class Download:
                     os.mkdir(self.directory)
                 except BaseException:
                     pass
-                print("Fetching images from gallery")
+                self.Logger.LogInfo("Fetching images from gallery")
                 # Fetching urls of all media in the post
                 self.GalleryPosts = requests.get(
                     "https://jackhammer.pythonanywhere.com/reddit/media/gallery",
@@ -127,11 +138,11 @@ class Download:
                 self.GetGallery(posts)
 
             elif "youtu.be" in self.postLink or "youtube.com" in self.postLink:
-                print("Type Detected: Youtube Video")
+                self.Logger.LogInfo("Type Detected: Youtube Video")
                 self.mediaType = "yt"
 
                 try:
-                    print("Downloading Youtube Video")
+                    self.Logger.LogInfo("Downloading Youtube Video")
                     yt = YouTube(self.postLink)
                     stream = yt.streams.filter(progressive=True, file_extension='mp4').order_by('resolution')[-1]
                     if self.destination == None:
@@ -139,51 +150,51 @@ class Download:
                     else:
                         stream.download(self.destination,filename=self.output+".mp4")
 
-                    print("Downloaded Sucessfully...")
+                    self.Logger.LogInfo("Downloaded Sucessfully...")
 
                 except Exception as e:
-                    print("Connection Error")
-                    print(e)
+                    self.Logger.LogInfo("Connection Error")
+                    self.Logger.LogInfo(e)
 
             elif "i.imgur.com" in self.postLink:
-                print("Detected Post Type: Imgur Image")
+                self.Logger.LogInfo("Detected Post Type: Imgur Image")
                 self.mediaType = "imgur"
                 imageData = requests.get(self.postLink).content
                 file = open(f'{self.output}' + '.jpeg', 'wb')
                 file.write(imageData)
                 file.close()
-                print("Sucessfully Downloaded Image: " + f"{self.output}")
+                self.Logger.LogInfo("Sucessfully Downloaded Image: " + f"{self.output}")
                 if self.destination is not None:
                     shutil.move(f"{self.output}.jpeg", self.destination)
 
             elif "imgur.com" in self.postLink:
-                print("Detected Post Type: Imgur Album")
-                print("Support for imgur album posts has not yet been added")
+                self.Logger.LogInfo("Detected Post Type: Imgur Album")
+                self.Logger.LogInfo("Support for imgur album posts has not yet been added")
         
             else:
-                print("Error: Could Not Recognize Post Type")
+                self.Logger.LogInfo("Error: Could Not Recognize Post Type")
 
     def GetGallery(self, posts):  # Function to download and merge all images in a directory
 
         TotalPosts = len(posts)
-        print("Total images to be downloaded: ", TotalPosts)
+        self.Logger.LogInfo("Total images to be downloaded: "+ str(TotalPosts))
         for i in range(TotalPosts):
-            print(f"Downloading image {i+1} / {TotalPosts}")
+            self.Logger.LogInfo(f"Downloading image {i+1} / {TotalPosts}")
             ImageData = requests.get(posts[i]).content
             with open(os.path.join(self.directory, self.output + f'{i+1}.jpeg'), 'wb') as image:
                 image.write(ImageData)
                 image.close()
-        print("Image Gallery Successfully Downloaded!")
+        self.Logger.LogInfo("Image Gallery Successfully Downloaded!")
 
     def InitiateVideo(self, quality, url):
         try:
-            print('Fetching Video...')
+            self.Logger.LogInfo('Fetching Video...')
             self.fetchVideo(quality, url)
-            print('Fetching Audio...')
+            self.Logger.LogInfo('Fetching Audio...')
             self.fetchAudio(url)
         except BaseException as e:
-            print("Sorry there was an error while fetching video/audio files")
-            print("\nTraceback:\n",e)
+            self.Logger.LogInfo("Sorry there was an error while fetching video/audio files")
+            self.Logger.LogInfo("\nTraceback:\n",e)
         else:
             self.MergeVideo()
 
@@ -195,23 +206,23 @@ class Download:
         listIndex = qualityTypes.index(quality)
         wasDownloadSuccessful = False
         for quality in range(listIndex, -1, -1):
-            print(f'Trying resolution: {qualityTypes[quality]}p')
+            self.Logger.LogInfo(f'Trying resolution: {qualityTypes[quality]}p')
             try:
                 if self.destination is not None:
                     urllib.request.urlretrieve(
                         url + f'/DASH_{qualityTypes[quality]}.mp4',
                         self.destination + "Video.mp4")
                     wasDownloadSuccessful = True
-                    print("Video File Downloaded Successfully")
+                    self.Logger.LogInfo("Video File Downloaded Successfully")
                 else:
                     urllib.request.urlretrieve(
                         url + f'/DASH_{qualityTypes[quality]}.mp4', "Video.mp4")
                     wasDownloadSuccessful = True
-                    print("Video File Downloaded Successfully")
+                    self.Logger.LogInfo("Video File Downloaded Successfully")
                 break
             except BaseException as e:
-                print(e)
-                print(
+                self.Logger.LogInfo(e)
+                self.Logger.LogInfo(
                     f'Video file not avaliable at {qualityTypes[quality]}p going to next resolution')
                 continue
         if not wasDownloadSuccessful:
@@ -232,7 +243,7 @@ class Download:
     # file
     def MergeVideo(self):
         try:
-            print("Merging Files")
+            self.Logger.LogInfo("Merging Files")
             if self.destination is not None:
                 clip = VideoFileClip(self.destination + "Video.mp4")
             else:
@@ -247,28 +258,29 @@ class Download:
                 try:
                     if self.destination is not None:
                         clip.write_videofile(
-                            self.destination + self.output + ".mp4")
+                            self.destination + self.output + ".mp4" , verbose=self.verbose , logger=None)
                     else:
-                        clip.write_videofile(self.output + ".mp4")
+                        clip.write_videofile(self.output + ".mp4", verbose=self.verbose , logger=None)
                 except Exception as e:
                     pass
+                self.Logger.LogInfo("Merging Done!")
                 self.CleanUp()
-                print(self.output + " Successfully Downloaded!")
+                self.Logger.LogInfo(self.output + " Successfully Downloaded!")
                 clip.close()
             except Exception as e:
                 clip.close()
-                print('Video has no sound')
+                self.Logger.LogInfo('Video has no sound')
                 self.CleanUp(True)
-                print(self.output + " Successfully Downloaded!")
+                self.Logger.LogInfo(self.output + " Successfully Downloaded!")
         except Exception as e:
-            print("Merge Failed!")
-            print(e)
+            self.Logger.LogInfo("Merge Failed!")
+            self.Logger.LogInfo(e)
 
     # Function to remove the unnecessary files as well as temporary
     # directories and files
     def CleanUp(self, videoOnly=False):
 
-        print('cleaning')
+        self.Logger.LogInfo('cleaning')
         try:
             if self.destination is not None:
                 os.remove(self.destination + "Audio.mp3")
@@ -297,7 +309,7 @@ class Download:
                         self.output +
                         ".mp4")
             except Exception as e:
-                print(e)
+                self.Logger.LogInfo(e)
 
     def GetMediaType(self):  # Function to return the type of media
         if self.mediaType is not None:
@@ -345,6 +357,11 @@ class DownloadBySubreddit:
             The location of the cache file. use cache files to keep
             a record of posts being downloaded so the duplicate files
             won't get downloaded
+        verbose: bool
+            Controls wether the logger should print progress to
+            console or not
+            Set It To True (Default) to print the progress
+            Set It To False to not print the progress
 
     |Public Functions|
 
@@ -367,9 +384,12 @@ class DownloadBySubreddit:
             output="downloaded",
             destination=None,
             cachefile=None,
-            flair=None):
+            flair=None,
+            verbose=True):
+        self.verbose = verbose
+        self.Logger = Logger(self.verbose)
         if SortBy == "hot" or SortBy == "new" or SortBy == "top":
-            print("Fetching Posts...")
+            self.Logger.LogInfo("Fetching Posts...")
             try:
                 self.PostLinks = requests.get(
                     "https://jackhammer.pythonanywhere.com//reddit/subreddit/all",
@@ -409,14 +429,14 @@ class DownloadBySubreddit:
                 self.DownloadLinks(
                     self.ProcessedLinks, quality, output, destination)
             except Exception as e:
-                print("Unable to fetch posts")
-                print(e)
+                self.Logger.LogInfo("Unable to fetch posts")
+                self.Logger.LogInfo(e)
         else:
-            print("Bad SortBy Option Please either choose 'top' or 'new' or 'hot' ")
+            self.Logger.LogInfo("Bad SortBy Option Please either choose 'top' or 'new' or 'hot' ")
 
     def DownloadLinks(self, links, quality, output, destination):
-        print("Downloading Posts...")
-        print("Creating ", output, " directory...")
+        self.Logger.LogInfo("Downloading Posts...")
+        self.Logger.LogInfo("Creating "+ str(output)+ " directory...")
         path = ''
         try:
             if destination is not None:
@@ -430,7 +450,7 @@ class DownloadBySubreddit:
         i = 1
         try:
             for link in links:
-                print(f"Downloading Post {i} of {length}")
+                self.Logger.LogInfo(f"Downloading Post {i} of {length}")
                 if destination is not None:
                     Download(
                         link,
@@ -438,14 +458,15 @@ class DownloadBySubreddit:
                         output +
                         str(i),
                         destination +
-                        f'/{output}/')
+                        f'/{output}/',
+                        verbose=self.verbose)
                 else:
-                    Download(link, quality, output + str(i), f'{output}/')
+                    Download(link, quality, output + str(i), f'{output}/',verbose=self.verbose)
                 i += 1
-            print("All Posts Downloaded Sucessfully...")
+            self.Logger.LogInfo("All Posts Downloaded Sucessfully...")
         except Exception as e:
-            print("There was an unexpected error while downloading posts...")
-            print(e)
+            self.Logger.LogInfo("There was an unexpected error while downloading posts...")
+            self.Logger.LogInfo(e)
 
     def GetPostAuthors(self):
         Authors = []
@@ -492,6 +513,11 @@ class DownloadImagesBySubreddit:
             The location of the cache file. use cache files to keep
             a record of posts being downloaded so the duplicate files
             won't get downloaded
+        verbose: bool
+            Controls wether the logger should print progress to
+            console or not
+            Set It To True (Default) to print the progress
+            Set It To False to not print the progress
 
     |Public Functions|
 
@@ -514,9 +540,12 @@ class DownloadImagesBySubreddit:
             output="downloaded",
             destination=None,
             flair=None,
-            cachefile=None):
+            cachefile=None,
+            verbose=True):
+        self.verbose = verbose
+        self.Logger = Logger(self.verbose)
         if SortBy == "hot" or SortBy == "new" or SortBy == "top":
-            print("Fetching Posts...")
+            self.Logger.LogInfo("Fetching Posts...")
             try:
                 self.PostLinks = requests.get(
                     "https://jackhammer.pythonanywhere.com//reddit/subreddit/images",
@@ -539,7 +568,7 @@ class DownloadImagesBySubreddit:
 
                     ToBeRemoved = []
                     for link in Links:
-                        print(link)
+                        self.Logger.LogInfo(link)
                         if link not in self.cachedLinks:
                             self.cachedLinks.append(link)
                         else:
@@ -556,14 +585,14 @@ class DownloadImagesBySubreddit:
                 self.DownloadLinks(
                     self.ProcessedLinks, quality, output, destination)
             except Exception as e:
-                print("Unable to fetch posts")
-                print(e)
+                self.Logger.LogInfo("Unable to fetch posts")
+                self.Logger.LogInfo(e)
         else:
-            print("Bad SortBy Option Please either choose 'top' or 'new' or 'hot' ")
+            self.Logger.LogInfo("Bad SortBy Option Please either choose 'top' or 'new' or 'hot' ")
 
     def DownloadLinks(self, links, quality, output, destination):
-        print("Downloading Posts...")
-        print("Creating ", output, " directory...")
+        self.Logger.LogInfo("Downloading Posts...")
+        self.Logger.LogInfo("Creating "+ str(output) + " directory...")
         path = ''
         try:
             if destination is not None:
@@ -577,7 +606,7 @@ class DownloadImagesBySubreddit:
         i = 1
         try:
             for link in links:
-                print(f"Downloading Post {i} of {length}")
+                self.Logger.LogInfo(f"Downloading Post {i} of {length}")
                 if destination is not None:
                     Download(
                         link,
@@ -585,14 +614,14 @@ class DownloadImagesBySubreddit:
                         output +
                         str(i),
                         destination +
-                        f'/{output}/')
+                        f'/{output}/',verbose=self.verbose)
                 else:
-                    Download(link, quality, output + str(i), f'{output}/')
+                    Download(link, quality, output + str(i), f'{output}/',verbose=self.verbose)
                 i += 1
-            print("All Posts Downloaded Sucessfully...")
+            self.Logger.LogInfo("All Posts Downloaded Sucessfully...")
         except Exception as e:
-            print("There was an unexpected error while downloading posts...")
-            print(e)
+            self.Logger.LogInfo("There was an unexpected error while downloading posts...")
+            self.Logger.LogInfo(e)
 
     def GetPostAuthors(self):
         Authors = []
@@ -640,6 +669,11 @@ class DownloadVideosBySubreddit:
             The location of the cache file. use cache files to keep
             a record of posts being downloaded so the duplicate files
             won't get downloaded
+        verbose: bool
+            Controls wether the logger should print progress to
+            console or not
+            Set It To True (Default) to print the progress
+            Set It To False to not print the progress
 
     |Public Functions|
 
@@ -662,9 +696,12 @@ class DownloadVideosBySubreddit:
             output="downloaded",
             destination=None,
             flair=None,
-            cachefile=None):
+            cachefile=None,
+            verbose=True):
+        self.verbose = verbose
+        self.Logger = Logger(self.verbose)
         if SortBy == "hot" or SortBy == "new" or SortBy == "top":
-            print("Fetching Posts...")
+            self.Logger.LogInfo("Fetching Posts...")
             try:
                 self.PostLinks = requests.get(
                     "https://jackhammer.pythonanywhere.com//reddit/subreddit/videos",
@@ -687,7 +724,7 @@ class DownloadVideosBySubreddit:
 
                     ToBeRemoved = []
                     for link in Links:
-                        print(link)
+                        self.Logger.LogInfo(link)
                         if link not in self.cachedLinks:
                             self.cachedLinks.append(link)
                         else:
@@ -704,14 +741,14 @@ class DownloadVideosBySubreddit:
                 self.DownloadLinks(
                     self.ProcessedLinks, quality, output, destination)
             except Exception as e:
-                print("Unable to fetch posts")
-                print(e)
+                self.Logger.LogInfo("Unable to fetch posts")
+                self.Logger.LogInfo(e)
         else:
-            print("Bad SortBy Option Please either choose 'top' or 'new' or 'hot' ")
+            self.Logger.LogInfo("Bad SortBy Option Please either choose 'top' or 'new' or 'hot' ")
 
     def DownloadLinks(self, links, quality, output, destination):
-        print("Downloading Posts...")
-        print("Creating ", output, " directory...")
+        self.Logger.LogInfo("Downloading Posts...")
+        self.Logger.LogInfo("Creating "+ str(output) +" directory...")
         path = ''
         try:
             if destination is not None:
@@ -725,7 +762,7 @@ class DownloadVideosBySubreddit:
         i = 1
         try:
             for link in links:
-                print(f"Downloading Post {i} of {length}")
+                self.Logger.LogInfo(f"Downloading Post {i} of {length}")
                 if destination is not None:
                     Download(
                         link,
@@ -733,14 +770,14 @@ class DownloadVideosBySubreddit:
                         output +
                         str(i),
                         destination +
-                        f'/{output}/')
+                        f'/{output}/',verbose=self.verbose)
                 else:
-                    Download(link, quality, output + str(i), f'{output}/')
+                    Download(link, quality, output + str(i), f'{output}/',verbose=self.verbose)
                 i += 1
-            print("All Posts Downloaded Sucessfully...")
+            self.Logger.LogInfo("All Posts Downloaded Sucessfully...")
         except Exception as e:
-            print("There was an unexpected error while downloading posts...")
-            print(e)
+            self.Logger.LogInfo("There was an unexpected error while downloading posts...")
+            self.Logger.LogInfo(e)
 
     def GetPostAuthors(self):
         Authors = []
@@ -787,6 +824,11 @@ class DownloadGalleriesBySubreddit:
             The location of the cache file. use cache files to keep
             a record of posts being downloaded so the duplicate files
             won't get downloaded
+        verbose: bool
+            Controls wether the logger should print progress to
+            console or not
+            Set It To True (Default) to print the progress
+            Set It To False to not print the progress
 
     |Public Functions|
 
@@ -809,9 +851,12 @@ class DownloadGalleriesBySubreddit:
             output="downloaded",
             destination=None,
             flair=None,
-            cachefile=None):
+            cachefile=None,
+            verbose=True):
+        self.verbose = verbose
+        self.Logger = Logger(self.verbose)
         if SortBy == "hot" or SortBy == "new" or SortBy == "top":
-            print("Fetching Posts...")
+            self.Logger.LogInfo("Fetching Posts...")
             try:
                 self.PostLinks = requests.get(
                     "https://jackhammer.pythonanywhere.com//reddit/subreddit/galleries",
@@ -834,7 +879,7 @@ class DownloadGalleriesBySubreddit:
 
                     ToBeRemoved = []
                     for link in Links:
-                        print(link)
+                        self.Logger.LogInfo(link)
                         if link not in self.cachedLinks:
                             self.cachedLinks.append(link)
                         else:
@@ -851,14 +896,14 @@ class DownloadGalleriesBySubreddit:
                 self.DownloadLinks(
                     self.ProcessedLinks, quality, output, destination)
             except Exception as e:
-                print("Unable to fetch posts")
-                print(e)
+                self.Logger.LogInfo("Unable to fetch posts")
+                self.Logger.LogInfo(e)
         else:
-            print("Bad SortBy Option Please either choose 'top' or 'new' or 'hot' ")
+            self.Logger.LogInfo("Bad SortBy Option Please either choose 'top' or 'new' or 'hot' ")
 
     def DownloadLinks(self, links, quality, output, destination):
-        print("Downloading Posts...")
-        print("Creating ", output, " directory...")
+        self.Logger.LogInfo("Downloading Posts...")
+        self.Logger.LogInfo("Creating "+ str(output) + " directory...")
         path = ''
         try:
             if destination is not None:
@@ -872,7 +917,7 @@ class DownloadGalleriesBySubreddit:
         i = 1
         try:
             for link in links:
-                print(f"Downloading Post {i} of {length}")
+                self.Logger.LogInfo(f"Downloading Post {i} of {length}")
                 if destination is not None:
                     Download(
                         link,
@@ -880,14 +925,15 @@ class DownloadGalleriesBySubreddit:
                         output +
                         str(i),
                         destination +
-                        f'/{output}/')
+                        f'/{output}/',
+                        verbose=self.verbose)
                 else:
-                    Download(link, quality, output + str(i), f'{output}/')
+                    Download(link, quality, output + str(i), f'{output}/',verbose=self.verbose)
                 i += 1
-            print("All Posts Downloaded Sucessfully...")
+            self.Logger.LogInfo("All Posts Downloaded Sucessfully...")
         except Exception as e:
-            print("There was an unexpected error while downloading posts...")
-            print(e)
+            self.Logger.LogInfo("There was an unexpected error while downloading posts...")
+            self.Logger.LogInfo(e)
 
     def GetPostAuthors(self):
         Authors = []
@@ -912,6 +958,11 @@ class GetPostAuthor:
 
         url : str
             The url of the post to get the author of.
+        verbose: bool
+            Controls wether the logger should print progress to
+            console or not
+            Set It To True (Default) to print the progress
+            Set It To False to not print the progress
 
     |Public Functions|
 
@@ -920,15 +971,17 @@ class GetPostAuthor:
             Returns the author of the post.
     '''
 
-    def __init__(self, url):
+    def __init__(self, url, verbose=True):
+        self.verbose = verbose
+        self.Logger = Logger(self.verbose)
         try:
             self.PostAuthor = requests.get(
                 "https://jackhammer.pythonanywhere.com/reddit/media/author",
                 params={
                     'url': url}).text
         except Exception as e:
-            print("Unable to fetch post author")
-            print(e)
+            self.Logger.LogInfo("Unable to fetch post author")
+            self.Logger.LogInfo(e)
 
     def Get(self):
         return self.PostAuthor
@@ -943,6 +996,11 @@ class GetUser:
     |Parameters|
         username : str
             The username of the user to get the information of.
+        verbose: bool
+            Controls wether the logger should print progress to
+            console or not
+            Set It To True (Default) to print the progress
+            Set It To False to not print the progress
 
     |Public Functions|
         Get()
@@ -969,7 +1027,9 @@ class GetUser:
             Returns the user information of the user.
     '''
 
-    def __init__(self, username):
+    def __init__(self, username, verbose=True):
+        self.verbose = verbose
+        self.Logger = Logger(self.verbose)
         try:
             self.UserInfo = requests.get(
                 "https://jackhammer.pythonanywhere.com/reddit/user/info",
@@ -977,8 +1037,8 @@ class GetUser:
                     'username': username}).text
             self.info = json.loads(self.UserInfo)
         except Exception as e:
-            print("Unable to fetch user info")
-            print(e)
+            self.Logger.LogInfo("Unable to fetch user info")
+            self.Logger.LogInfo(e)
 
     def Get(self):
         return self.info
@@ -994,6 +1054,11 @@ class GetPostTitle:
 
         url : str
             The url of the post to get the title of.
+        verbose: bool
+            Controls wether the logger should print progress to
+            console or not
+            Set It To True (Default) to print the progress
+            Set It To False to not print the progress
 
     |Public Functions|
 
@@ -1002,15 +1067,17 @@ class GetPostTitle:
             Returns the title of the post.
     '''
 
-    def __init__(self, url):
+    def __init__(self, url, verbose=True):
+        self.verbose = verbose
+        self.Logger = Logger(self.verbose)
         try:
             self.PostTitle = requests.get(
                 "http://jackhammer.pythonanywhere.com/reddit/media/title",
                 params={
                     'url': url}).text
         except Exception as e:
-            print("Unable to fetch post title")
-            print(e)
+            self.Logger.LogInfo("Unable to fetch post title")
+            self.Logger.LogInfo(e)
 
     def Get(self):
         return self.PostTitle
@@ -1033,9 +1100,17 @@ class GetPostAudio:
         output : str
             The name of the file to be saved as audio.
 
+            verbose: bool
+                Controls wether the logger should print progress to
+                console or not
+                Set It To True (Default) to print the progress
+                Set It To False to not print the progress
+
     '''
 
-    def __init__(self, url, destination=None, output=None):
+    def __init__(self, url, destination=None, output=None, verbose=True):
+        self.verbose = verbose
+        self.Logger = Logger(self.verbose)
         self.url = url
         self.postLink = requests.get(
             "https://jackhammer.pythonanywhere.com/reddit/media/downloader",
@@ -1046,7 +1121,7 @@ class GetPostAudio:
         doc = requests.get(self.postLink + '/DASH_audio.mp4')
 
         if doc.status_code == 200:
-            print('Downloading Audio...')
+            self.Logger.LogInfo('Downloading Audio...')
             if self.destination is not None:
                 if not output:
                     with open(os.path.join(self.destination, 'Audio.mp3'), 'wb') as f:
@@ -1065,7 +1140,7 @@ class GetPostAudio:
                     with open(output + '.mp3', 'wb') as f:
                         f.write(doc.content)
                         f.close()
-            print('Audio Downloaded Sucessfully...')
+            self.Logger.LogInfo('Audio Downloaded Sucessfully...')
 
         else:
             raise Exception("Unable to download audio, audio not found...")
@@ -1091,7 +1166,7 @@ out specific files or are facing issues with RedDownloader.
 #DownloadBySubreddit("memes", 5, output="Subreddit API")
 
 ## Test For Youtube Links
-#Download("https://www.reddit.com/r/videos/comments/xi89wf/this_guy_made_a_1hz_cpu_in_minecraft_to_run/", output="gdfgn!" , destination="D:/Python")
+#Download("https://www.reddit.com/r/videos/comments/xi89wf/this_guy_made_a_1hz_cpu_in_minecraft_to_run/", output="Youtube Video")
 
 ## Test For Imgur Posts
-#Download("https://www.reddit.com/r/pics/comments/xbzjbv/my_grandparents_100_yearolddresser_prerestoration/",destination="D:/Python")
+#Download("https://www.reddit.com/r/pics/comments/xbzjbv/my_grandparents_100_yearolddresser_prerestoration/",output="Imgur Image")
