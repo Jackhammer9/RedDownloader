@@ -38,13 +38,13 @@
 <img src="https://img.shields.io/badge/dynamic/json?style=flat&logo=reddit&logoColor=white&color=orange&label=Requests%20Handled&query=requests&url=https%3A%2F%2Fjackhammer.pythonanywhere.com%2FRedDownloader%2FRequests%2F">
     
 </div>
-
+<br>
 <h1> Introduction </h1>
 
 A very easy to use Reddit Media Downloader. The library can also be used to download pictures and even picture galleries all just with a reddit post link. You can access Reddit API methods without having your own bot with classes such as ```DownloadBySubreddit``` more on that below.
 
 <b>NOTE: </b> As of RedDownloader 4 only Youtube and Imgur Single Image Posts are supported
-
+<br>
 <h1> Installation </h1>
 To Install the package:
 
@@ -52,7 +52,7 @@ To Install the package:
 pip install RedDownloader
 ```
 
-
+<br>
 <h1> Usage </h1>
 
 ```python
@@ -112,7 +112,7 @@ for images it returns a ```i```  for videos it returns a ```v``` and for a galle
 The package has been tested for videos with no sound as well.
 
 Galleries were first supported in RedDownloader 2.2.0 any older version used to download a gallery post would return a ```Post Not Recoganized``` error
-
+<br>
 <h1>Using Reddit API Methods</h1>
 
 To download some number of media from a specific subreddit you can use the ```DownloadBySubreddit```:
@@ -154,7 +154,7 @@ RedDownloader.DownloadGalleriesBySubreddit("python" , 5)
 ```
 
 This would only download Gallery type posts from a subreddit it is derived from ```DownloadBySubreddit``` hence shares the same argumets as listed above
-
+<br>
 <h1>New Features in RedDownloader 3.1.1:</h1>
 
 You can now use the ```GetPostAuthor``` class to get a post author/poster from a given url the syntax followed is
@@ -178,7 +178,7 @@ print(authors)
 
 
 <h1>New Features in RedDownloader 3.2.0:</h1>
-
+<br>
 <h2> The GetUser Class </h2>
 
 You can now use the ```GetUser``` class to get information about a user with the following syntax
@@ -213,7 +213,7 @@ Key : ReturnType
 
 for suspended accounts only ```AccountName``` and ```Suspended``` as keys are avaliable
 
-
+<br>
 <h2> Cache FIles </h2>
 
 A new argument called ```cachefile``` can now be used with following classes ```DownloadBySubreddit``` , ```DownloadImagesBySubreddit``` , ```DownloadVideosBySubreddit``` and ```DownloadGalleriesBySubreddit```.
@@ -232,7 +232,7 @@ This is especially beneficial if you would like to store different types of post
 
 
 <h1>New Features in RedDownloader 3.2.1:</h1>
-
+<br>
 <h2> The GetPostTitles && GetPostTitle Class </h2>
 
 You can now use the ```GetPostTitle``` class to get a post title from a given url the syntax followed is
@@ -245,7 +245,7 @@ print(title)
 For classes like ```DownloadBySubreddit``` , ```DownloadImagesBySubreddit``` , ```DownloadVideosBySubreddit``` and ```DownloadGalleriesBySubreddit``` there is a method ```GetPostTitles``` which returns a list of titles of the posts you just downloaded.
 
 And for regular ```Download``` class you can now use the ```GetPostTitle``` method to get a post title.
-
+<br>
 <h2> The GetPostAudio Class </h2>
 
 You can now use the ```GetPostAudio``` class to get a post audio from a given url the syntax followed is
@@ -257,7 +257,7 @@ audio = RedDownloader.GetPostAudio(url)
 To change the file download destination you can set the ```destination``` argument to the path you want to download the file to. By default it downloads the file in the current working directory. To change to output file name you can set the ```output``` argument to the name of the file you want to download the audio to. By default it downloads the file with the name ```Audio.mp3```.
 
 <h1>New Features in RedDownloader 4.0:</h1>
-
+<br>
 <h2> Youtube and Imgur Support</h2>
 
 Starting RedDownloader 4 you can download reddit posts which link to a youtube video and imgur single files.
@@ -266,20 +266,22 @@ Starting RedDownloader 4 you can download reddit posts which link to a youtube v
 Any Version previous to RedDownloader 4 would yield a ```Post Not Recoganized Error```
 
 <h1>New Features in RedDownloader 4.1.1:</h1>
-
+<br>
 <h2>Verbose Enabling/Disabling [Silent Mode]</h2>
 
-Starting RedDownloader 4.1.1 you can disable verbose i.e the ability to download posts without logging anything to the console for a cleaner experience.
+Starting RedDownloader 4.1.2 you can disable verbose i.e the ability to download posts without logging anything to the console for a cleaner experience.
 By default Verbose is set to ```True``` That is all the progress is logged to console
 
 All Classes accept ```verbose``` as an argument so to disable verbose you can do:
-```DownloadBySubreddit("memes", 5, output="Funny Memes" , verbose=False)```
+```python
+DownloadBySubreddit("memes", 5, output="Funny Memes" , verbose=False)
+```
 
-Trying to use verbose with any version previous to RedDownloader 4.1.1 would yield a ```got an unexpected keyword argument``` error
+Trying to use verbose with any version previous to RedDownloader 4.1.2 would yield a ```got an unexpected keyword argument``` error
 
 
-## Star History
-
+<h1> Star History </h1>
+<br>
 <div align = "center">
 
 [![Star History Chart](https://api.star-history.com/svg?repos=JackhammerYT/RedDownloader&type=Date)](https://star-history.com/#JackhammerYT/RedDownloader&Date)
