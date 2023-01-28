@@ -36,8 +36,6 @@
 <div align="center">
     
 <img src="https://img.shields.io/badge/dynamic/json?style=flat&logo=reddit&logoColor=white&color=orange&label=Requests%20Handled&query=requests&url=https%3A%2F%2Fjackhammer.pythonanywhere.com%2FRedDownloader%2FRequests%2F">
-
-[![RedDownloader](https://snyk.io/advisor/python/RedDownloader/badge.svg)](https://snyk.io/advisor/python/RedDownloader)
     
 </div>
 <br>

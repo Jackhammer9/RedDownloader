@@ -1,5 +1,5 @@
 """
-This is the main source file for RedDownloader Version 4.1.2 with it's primary
+This is the main source file for RedDownloader Version 4.2.0 with it's primary
 usage being downloading Reddit Posts i.e Image Posts , Videos , Gifs , Gallery
 Posts with additional support for Youtube links and Imgur Links.
 """
@@ -9,14 +9,44 @@ import urllib.request
 import json
 import os
 import shutil
+import logging
 
 # External Imports | Required Packages
 from moviepy.editor import *
 import requests
 from pytube import YouTube
 
-# Other Script Refference
-from Utils import Logger
+class Logger:
+
+    def __init__(self, verbose=True):
+        self.verbose = verbose
+
+    def LogInfo(self, text):
+        if self.verbose == True:
+            logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
+            logging.info(text)
+        else:
+            logging.basicConfig(format="%(levelname)s: %(message)s")
+
+    def LogError(self, text):
+        if self.verbose == True:
+            logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.ERROR)
+            logging.error(text)
+        else:
+            logging.basicConfig(format="%(levelname)s: %(message)s")
+
+    def LogWarning(self, text):
+        if self.verbose == True:
+            logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.WARNING)
+            logging.warning(text)
+        else:
+            logging.basicConfig(format="%(levelname)s: %(message)s")
+
+    def SetVerbose(self, boo):
+        self.verbose = boo
+
+    def GetVerbose(self):
+        return self.verbose
 
 
 class Download:
@@ -1219,7 +1249,7 @@ Below are some test lines to make sure all RedDownloader Features are working we
 out specific files or are facing issues with RedDownloader.
 """
 ## Test For Image Downloading
-# Download("https://www.reddit.com/r/memes/comments/xfhe9j/my_brain_haha_fuck_you_losah/", output="Image")
+#Download("https://www.reddit.com/r/memes/comments/xfhe9j/my_brain_haha_fuck_you_losah/", output="Image")
 
 ## Test For Video Downloading
 # Download("https://www.reddit.com/r/Unity2D/comments/xfadpb/trying_to_make_new_over_the_top_spells_for_our/", output="VideoTest")
