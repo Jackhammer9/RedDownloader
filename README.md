@@ -265,11 +265,11 @@ Starting RedDownloader 4 you can download reddit posts which link to a youtube v
 
 Any Version previous to RedDownloader 4 would yield a ```Post Not Recoganized Error```
 
-<h1>New Features in RedDownloader 4.1.1:</h1>
+<h1>New Features in RedDownloader 4.2.0:</h1>
 <br>
 <h2>Verbose Enabling/Disabling [Silent Mode]</h2>
 
-Starting RedDownloader 4.1.2 you can disable verbose i.e the ability to download posts without logging anything to the console for a cleaner experience.
+Starting RedDownloader 4.2.0 you can disable verbose i.e the ability to download posts without logging anything to the console for a cleaner experience.
 By default Verbose is set to ```True``` That is all the progress is logged to console
 
 All Classes accept ```verbose``` as an argument so to disable verbose you can do:
@@ -277,7 +277,7 @@ All Classes accept ```verbose``` as an argument so to disable verbose you can do
 DownloadBySubreddit("memes", 5, output="Funny Memes" , verbose=False)
 ```
 
-Trying to use verbose with any version previous to RedDownloader 4.1.2 would yield a ```got an unexpected keyword argument``` error
+Trying to use verbose with any version previous to RedDownloader 4.2.0 would yield a ```got an unexpected keyword argument``` error
 
 
 <h1> Star History </h1>
