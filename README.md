@@ -1,6 +1,6 @@
 <div align="center">
     
-<img src= "https://raw.githubusercontent.com/JackhammerYT/RedDownloader/main/.github/logo.png" height=250px width=250px>
+<img src= "https://raw.githubusercontent.com/Jackhammer9/RedDownloader/main/.github/logo.png" height=250px width=250px>
     
 </div>
 <br><br>
@@ -16,14 +16,14 @@
 <div align = "center">
     
 
-![GitHub forks](https://img.shields.io/github/forks/JackhammerYT/RedDownloader?color=red&logo=Github&style=flat-square) ![GitHub watchers](https://img.shields.io/github/watchers/JackhammerYT/RedDownloader?logo=Github) ![GitHub Repo stars](https://img.shields.io/github/stars/JackhammerYT/RedDownloader?logo=Github) ![GitHub followers](https://img.shields.io/github/followers/JackhammerYT?logo=Github) 
+![GitHub forks](https://img.shields.io/github/forks/Jackhammer9/RedDownloader?color=red&logo=Github&style=flat-square) ![GitHub watchers](https://img.shields.io/github/watchers/Jackhammer9/RedDownloader?logo=Github) ![GitHub Repo stars](https://img.shields.io/github/stars/Jackhammer9/RedDownloader?logo=Github) ![GitHub followers](https://img.shields.io/github/followers/Jackhammer9?logo=Github) 
 
     
 </div>
 
 <div align = "center">
     
-![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/JackhammerYT/RedDownloader?logo=Github)  ![GitHub closed issues](https://img.shields.io/github/issues-closed/JackhammerYT/RedDownloader?color=255%2C255%2C0&logo=Github)![GitHub repo size](https://img.shields.io/github/repo-size/JackhammerYT/RedDownloader?logo=Github)![GitHub release (latest by date)](https://img.shields.io/github/v/release/JackhammerYT/RedDownloader?display_name=tag&logo=Github)
+![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/Jackhammer9/RedDownloader?logo=Github)  ![GitHub closed issues](https://img.shields.io/github/issues-closed/Jackhammer9/RedDownloader?color=255%2C255%2C0&logo=Github)![GitHub repo size](https://img.shields.io/github/repo-size/Jackhammer9/RedDownloader?logo=Github)![GitHub release (latest by date)](https://img.shields.io/github/v/release/Jackhammer9/RedDownloader?display_name=tag&logo=Github)
     
 </div>
 
