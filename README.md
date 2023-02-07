@@ -284,6 +284,6 @@ Trying to use verbose with any version previous to RedDownloader 4.2.0 would yie
 <br>
 <div align = "center">
 
-[![Star History Chart](https://api.star-history.com/svg?repos=JackhammerYT/RedDownloader&type=Date)](https://star-history.com/#JackhammerYT/RedDownloader&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=Jackhammer9/RedDownloader&type=Date)](https://star-history.com/#Jackhammer9/RedDownloader&Date)
 
 </div>
