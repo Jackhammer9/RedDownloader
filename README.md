@@ -32,12 +32,6 @@
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/RedDownloader?label=Pypi%20Downloads&logo=Pypi) ![PyPI](https://img.shields.io/pypi/v/RedDownloader?logo=pypi)
     
 </div>
-
-<div align="center">
-    
-<img src="https://img.shields.io/badge/dynamic/json?style=flat&logo=reddit&logoColor=white&color=orange&label=Requests%20Handled&query=requests&url=https%3A%2F%2Fjackhammer.pythonanywhere.com%2FRedDownloader%2FRequests%2F">
-    
-</div>
 <br>
 <h1> Introduction </h1>
 
