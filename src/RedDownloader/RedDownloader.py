@@ -110,10 +110,13 @@ class Download:
             )
         else:
             # Getting the absolute reddit post link
-            self.postLink = requests.get(
-                "https://jackhammer.pythonanywhere.com/reddit/media/downloader",
-                params={"url": url},
-            ).text
+            if "v.redd.it" not in url and "i.redd.it" not in url:
+                self.postLink = requests.get(
+                    "https://jackhammer.pythonanywhere.com/reddit/media/downloader",
+                    params={"url": url},
+                ).text
+            else:
+                self.postLink = url
             try:
                 self.PostAuthor = GetPostAuthor(url)
             except Exception as e:
