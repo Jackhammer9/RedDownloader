@@ -1249,22 +1249,22 @@ Below are some test lines to make sure all RedDownloader Features are working we
 out specific files or are facing issues with RedDownloader.
 """
 ## Test For Image Downloading
-#Download("https://www.reddit.com/r/memes/comments/xfhe9j/my_brain_haha_fuck_you_losah/", output="Image")
+#Download("https://www.reddit.com/r/meme/comments/1bak5ea/this/", output="Image")
 
 ## Test For Video Downloading
-# Download("https://www.reddit.com/r/Unity2D/comments/xfadpb/trying_to_make_new_over_the_top_spells_for_our/", output="VideoTest")
+#Download("https://www.reddit.com/r/Unity3D/comments/1bawbqq/decided_im_gonna_try_post_every_week_heres_week_1/", output="VideoTest")
 
 ## Test For Gallery Posts
-# Download("https://www.reddit.com/r/pics/comments/xevl7p/a_magnetic_knife_strip_felt_too_small_in_the/", output="Gallery")
+#Download("https://www.reddit.com/r/blender/comments/1basx0i/is_it_possible_to_transfer_the_detail_from_the/", output="Gallery")
 
 ## Test for Gif Files
-# Download("https://www.reddit.com/r/dankmemes/comments/xfmqqn/thats_what_facebook_said/", output="Gif")
+#Download("https://www.reddit.com/r/dankmemes/comments/1bb0cz8/rip_legend/", output="Gif")
 
 ## Test For Using Reddit API Features
-# DownloadBySubreddit("memes", 5, output="Subreddit API")
+#DownloadBySubreddit("memes", 5, output="Subreddit API")
 
 ## Test For Youtube Links
-# Download("https://www.reddit.com/r/videos/comments/xi89wf/this_guy_made_a_1hz_cpu_in_minecraft_to_run/", output="Youtube Video")
+#Download("https://www.reddit.com/r/videos/comments/xi89wf/this_guy_made_a_1hz_cpu_in_minecraft_to_run/", output="Youtube Video")
 
 ## Test For Imgur Posts
-# Download("https://www.reddit.com/r/pics/comments/xbzjbv/my_grandparents_100_yearolddresser_prerestoration/",output="Imgur Image")
+#Download("https://www.reddit.com/r/pics/comments/xbzjbv/my_grandparents_100_yearolddresser_prerestoration/",output="Imgur Image")
