@@ -277,7 +277,9 @@ Trying to use verbose with any version previous to RedDownloader 4.2.0 would yie
 <h1>New Features in RedDownloader 4.3.0:</h1>
 <br>
 <h2>i.redd.it and v.redd.it URLs Support</h2>
-Starting version 4.3.0 RedDownloader can now directly download images and videos from the media url directly. However one limitation that remains would be that classes such as ```GetPostAuthor()```, ```GetPostAudio()```, ```GetPostTitle()``` would <b>not</b> work for such urls.
+Starting version 4.3.0 RedDownloader can now directly download images and videos from the media url directly. However one limitation that remains would be that classes such as
+
+```GetPostAuthor()```, ```GetPostAudio()```, ```GetPostTitle()``` will <b>not</b> work for such urls.
 
 For Example:
 ```python
