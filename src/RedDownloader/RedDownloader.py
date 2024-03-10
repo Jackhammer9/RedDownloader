@@ -1,5 +1,5 @@
 """
-This is the main source file for RedDownloader Version 4.2.0 with it's primary
+This is the main source file for RedDownloader Version 4.3.0 with it's primary
 usage being downloading Reddit Posts i.e Image Posts , Videos , Gifs , Gallery
 Posts with additional support for Youtube links and Imgur Links.
 """
