@@ -1,4 +1,4 @@
-Metadata-Version: 2.1
+Metadata-Version: 2.4
 Name: RedDownloader
 Version: 4.3.0
 Summary: A package to download Reddit hosted videos easily and efficiently.
@@ -16,6 +16,17 @@ Requires-Dist: requests
 Requires-Dist: tqdm==4.62.3
 Requires-Dist: moviepy
 Requires-Dist: pytube
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: project-url
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
 
 <div align="center">
     
@@ -56,7 +67,6 @@ Requires-Dist: pytube
 
 A very easy to use Reddit Media Downloader. The library can also be used to download pictures and even picture galleries all just with a reddit post link. You can access Reddit API methods without having your own bot with classes such as ```DownloadBySubreddit``` more on that below.
 
-<b>NOTE: </b> As of RedDownloader 4 only Youtube and Imgur Single Image Posts are supported
 <br>
 <h1> Installation </h1>
 To Install the package:
@@ -296,7 +306,9 @@ Trying to use verbose with any version previous to RedDownloader 4.2.0 would yie
 <h1>New Features in RedDownloader 4.3.0:</h1>
 <br>
 <h2>i.redd.it and v.redd.it URLs Support</h2>
-Starting version 4.3.0 RedDownloader can now directly download images and videos from the media url directly. However one limitation that remains would be that classes such as ```GetPostAuthor()```, ```GetPostAudio()```, ```GetPostTitle()``` would <b>not</b> work for such urls.
+Starting version 4.3.0 RedDownloader can now directly download images and videos from the media url directly. However one limitation that remains would be that classes such as
+
+```GetPostAuthor()```, ```GetPostAudio()```, ```GetPostTitle()``` will <b>not</b> work for such urls.
 
 For Example:
 ```python
