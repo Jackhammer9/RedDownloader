@@ -37,7 +37,6 @@
 
 A very easy to use Reddit Media Downloader. The library can also be used to download pictures and even picture galleries all just with a reddit post link. You can access Reddit API methods without having your own bot with classes such as ```DownloadBySubreddit``` more on that below.
 
-<b>NOTE: </b> As of RedDownloader 4 only Youtube and Imgur Single Image Posts are supported
 <br>
 <h1> Installation </h1>
 To Install the package:
