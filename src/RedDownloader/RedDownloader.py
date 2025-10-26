@@ -12,7 +12,7 @@ import shutil
 import logging
 
 # External Imports | Required Packages
-from moviepy.editor import *
+from moviepy import *
 import requests
 from pytube import YouTube
 
@@ -307,39 +307,34 @@ class Download:
     def MergeVideo(self):
         try:
             self.Logger.LogInfo("Merging Files")
-            if self.destination is not None:
-                clip = VideoFileClip(self.destination + "Video.mp4")
-            else:
-                clip = VideoFileClip("Video.mp4")
-            try:
-                if self.destination is not None:
-                    audioclip = AudioFileClip(self.destination + "Audio.mp3")
-                else:
-                    audioclip = AudioFileClip("Audio.mp3")
-                new_audioclip = CompositeAudioClip([audioclip])
-                clip.audio = new_audioclip
-                try:
-                    if self.destination is not None:
-                        clip.write_videofile(
-                            self.destination + self.output + ".mp4",
-                            verbose=self.verbose,
-                            logger=None,
-                        )
-                    else:
-                        clip.write_videofile(
-                            self.output + ".mp4", verbose=self.verbose, logger=None
-                        )
-                except Exception as e:
-                    pass
-                self.Logger.LogInfo("Merging Done!")
-                self.CleanUp()
-                self.Logger.LogInfo(self.output + " Successfully Downloaded!")
-                clip.close()
-            except Exception as e:
-                clip.close()
+            video_path = (
+                self.destination + "Video.mp4" if self.destination is not None else "Video.mp4"
+            )
+            audio_path = (
+                self.destination + "Audio.mp3" if self.destination is not None else "Audio.mp3"
+            )
+
+            if not os.path.exists(audio_path):
                 self.Logger.LogInfo("Video has no sound")
                 self.CleanUp(True)
                 self.Logger.LogInfo(self.output + " Successfully Downloaded!")
+                return
+
+            output_path = (
+                self.destination + self.output + ".mp4"
+                if self.destination is not None
+                else self.output + ".mp4"
+            )
+
+            with VideoFileClip(video_path) as clip:
+                with AudioFileClip(audio_path) as audioclip:
+                    new_audioclip = CompositeAudioClip([audioclip])
+                    clip.audio = new_audioclip
+                    clip.write_videofile(output_path)
+
+            self.Logger.LogInfo("Merging Done!")
+            self.CleanUp()
+            self.Logger.LogInfo(self.output + " Successfully Downloaded!")
         except Exception as e:
             self.Logger.LogInfo("Merge Failed!")
             self.Logger.LogInfo(e)
@@ -1274,7 +1269,7 @@ out specific files or are facing issues with RedDownloader.
 #Download("https://www.reddit.com/r/dankmemes/comments/1bb0cz8/rip_legend/", output="Gif")
 
 ## Test For Using Reddit API Features
-#DownloadBySubreddit("memes", 5, output="Subreddit API")
+#DownloadBySubreddit("memes", 25, output="Subreddit API")
 
 ## Test For Youtube Links
 #Download("https://www.reddit.com/r/videos/comments/xi89wf/this_guy_made_a_1hz_cpu_in_minecraft_to_run/", output="Youtube Video")
